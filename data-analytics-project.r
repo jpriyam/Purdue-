@@ -1,73 +1,113 @@
 {
  "cells": [
   {
-   "cell_type": "code",
-   "execution_count": 1,
-   "id": "7708a87c",
+   "cell_type": "markdown",
+   "id": "184bf974",
    "metadata": {
-    "execution": {
-     "iopub.execute_input": "2022-09-13T05:32:29.139396Z",
-     "iopub.status.busy": "2022-09-13T05:32:29.136893Z",
-     "iopub.status.idle": "2022-09-13T05:33:12.879429Z",
-     "shell.execute_reply": "2022-09-13T05:33:12.877530Z"
-    },
     "papermill": {
-     "duration": 43.752184,
-     "end_time": "2022-09-13T05:33:12.883544",
+     "duration": 0.00503,
+     "end_time": "2022-09-14T02:38:51.532939",
      "exception": false,
-     "start_time": "2022-09-13T05:32:29.131360",
+     "start_time": "2022-09-14T02:38:51.527909",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [],
    "source": [
-    "#Reading the \"previous_app.csv\" into the dataframe prev_data\n",
-    "prev_data <- read.csv(file = '../input/credit-analysis/previous_app.csv')"
+    "# Project name : Credit Analysis\n",
+    "\n",
+    "Data to be used: \n",
+    "\n",
+    "We will be using a dataset from Kaggle. The dataset can be attributed to a firm or a private bank that distributes loans to the masses. There is a process that goes on before the disbursement of loans to the borrower. A thorough background check confirming the credibility of the requester is done before starting the application process. This process comprises details like the requested amount, type of loan, approved amount etc. Provided below is an elaborate description of the two datasets we will be using.\n",
+    "Details are as follows:\n",
+    "\n",
+    "**Current app**: This file contains information about the current loan applications. Whether or not customers have payment issues.\n",
+    "\n",
+    "**Previous app**: This file contains details about prior loan applications, including whether they were approved, cancelled, rejected, or left unclaimed.  \n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "cb67ba12",
+   "execution_count": 1,
+   "id": "bc86ea8f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2022-09-13T05:33:12.918746Z",
-     "iopub.status.busy": "2022-09-13T05:33:12.890277Z",
-     "iopub.status.idle": "2022-09-13T05:33:28.085755Z",
-     "shell.execute_reply": "2022-09-13T05:33:28.083925Z"
+     "iopub.execute_input": "2022-09-14T02:38:51.546542Z",
+     "iopub.status.busy": "2022-09-14T02:38:51.544402Z",
+     "iopub.status.idle": "2022-09-14T02:39:48.113878Z",
+     "shell.execute_reply": "2022-09-14T02:39:48.112010Z"
     },
     "papermill": {
-     "duration": 15.203296,
-     "end_time": "2022-09-13T05:33:28.089621",
+     "duration": 56.578601,
+     "end_time": "2022-09-14T02:39:48.117280",
      "exception": false,
-     "start_time": "2022-09-13T05:33:12.886325",
+     "start_time": "2022-09-14T02:38:51.538679",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "── \u001b[1mAttaching packages\u001b[22m ─────────────────────────────────────── tidyverse 1.3.1 ──\n",
+      "\n",
+      "\u001b[32m✔\u001b[39m \u001b[34mggplot2\u001b[39m 3.3.6     \u001b[32m✔\u001b[39m \u001b[34mdplyr  \u001b[39m 1.0.9\n",
+      "\u001b[32m✔\u001b[39m \u001b[34mtibble \u001b[39m 3.1.7     \u001b[32m✔\u001b[39m \u001b[34mstringr\u001b[39m 1.4.0\n",
+      "\u001b[32m✔\u001b[39m \u001b[34mreadr  \u001b[39m 2.1.2     \u001b[32m✔\u001b[39m \u001b[34mforcats\u001b[39m 0.5.1\n",
+      "\u001b[32m✔\u001b[39m \u001b[34mpurrr  \u001b[39m 0.3.4     \n",
+      "\n",
+      "── \u001b[1mConflicts\u001b[22m ────────────────────────────────────────── tidyverse_conflicts() ──\n",
+      "\u001b[31m✖\u001b[39m \u001b[34mdplyr\u001b[39m::\u001b[32mfilter()\u001b[39m masks \u001b[34mstats\u001b[39m::filter()\n",
+      "\u001b[31m✖\u001b[39m \u001b[34mdplyr\u001b[39m::\u001b[32mlag()\u001b[39m    masks \u001b[34mstats\u001b[39m::lag()\n",
+      "\n"
+     ]
+    }
+   ],
    "source": [
+    "#Importing the libraries we will be using in the project\n",
+    "library(\"tidyr\")\n",
+    "library('ggvis')\n",
+    "library('tidyverse')\n",
+    "library('ggplot2')\n",
+    "#Reading the \"previous_app.csv\" into the dataframe prev_data\n",
+    "prev_data <- read.csv(file = '../input/credit-analysis/previous_app.csv')\n",
     "#Reading the \"current_app.csv\" into the dataframe prev_data\n",
     "curr_data <- read.csv(file = '../input/credit-analysis/current_app.csv')"
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "06f05846",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004355,
+     "end_time": "2022-09-14T02:39:48.126701",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:48.122346",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": []
+  },
+  {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "7f9900cb",
+   "execution_count": 2,
+   "id": "5ac39c0a",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2022-09-13T05:33:28.097754Z",
-     "iopub.status.busy": "2022-09-13T05:33:28.096208Z",
-     "iopub.status.idle": "2022-09-13T05:33:28.136338Z",
-     "shell.execute_reply": "2022-09-13T05:33:28.134654Z"
+     "iopub.execute_input": "2022-09-14T02:39:48.167383Z",
+     "iopub.status.busy": "2022-09-14T02:39:48.136688Z",
+     "iopub.status.idle": "2022-09-14T02:39:48.205572Z",
+     "shell.execute_reply": "2022-09-14T02:39:48.203084Z"
     },
     "papermill": {
-     "duration": 0.047977,
-     "end_time": "2022-09-13T05:33:28.139879",
+     "duration": 0.077596,
+     "end_time": "2022-09-14T02:39:48.208405",
      "exception": false,
-     "start_time": "2022-09-13T05:33:28.091902",
+     "start_time": "2022-09-14T02:39:48.130809",
      "status": "completed"
     },
     "tags": []
@@ -161,26 +201,138 @@
     }
    ],
    "source": [
-    "#printing the head of the dataframe to view the data available\n",
+    "#Printing the head of the dataframe to view the data available\n",
     "head(prev_data,n=5)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
-   "id": "ac00d719",
+   "execution_count": 3,
+   "id": "481ce21b",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2022-09-13T05:33:28.151714Z",
-     "iopub.status.busy": "2022-09-13T05:33:28.149997Z",
-     "iopub.status.idle": "2022-09-13T05:33:28.910294Z",
-     "shell.execute_reply": "2022-09-13T05:33:28.908655Z"
+     "iopub.execute_input": "2022-09-14T02:39:48.221211Z",
+     "iopub.status.busy": "2022-09-14T02:39:48.219601Z",
+     "iopub.status.idle": "2022-09-14T02:39:48.260749Z",
+     "shell.execute_reply": "2022-09-14T02:39:48.258377Z"
     },
     "papermill": {
-     "duration": 0.770458,
-     "end_time": "2022-09-13T05:33:28.912975",
+     "duration": 0.050417,
+     "end_time": "2022-09-14T02:39:48.263598",
      "exception": false,
-     "start_time": "2022-09-13T05:33:28.142517",
+     "start_time": "2022-09-14T02:39:48.213181",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A data.frame: 5 × 122</caption>\n",
+       "<thead>\n",
+       "\t<tr><th></th><th scope=col>SK_ID_CURR</th><th scope=col>TARGET</th><th scope=col>NAME_CONTRACT_TYPE</th><th scope=col>CODE_GENDER</th><th scope=col>FLAG_OWN_CAR</th><th scope=col>FLAG_OWN_REALTY</th><th scope=col>CNT_CHILDREN</th><th scope=col>AMT_INCOME_TOTAL</th><th scope=col>AMT_CREDIT</th><th scope=col>AMT_ANNUITY</th><th scope=col>⋯</th><th scope=col>FLAG_DOCUMENT_18</th><th scope=col>FLAG_DOCUMENT_19</th><th scope=col>FLAG_DOCUMENT_20</th><th scope=col>FLAG_DOCUMENT_21</th><th scope=col>AMT_REQ_CREDIT_BUREAU_HOUR</th><th scope=col>AMT_REQ_CREDIT_BUREAU_DAY</th><th scope=col>AMT_REQ_CREDIT_BUREAU_WEEK</th><th scope=col>AMT_REQ_CREDIT_BUREAU_MON</th><th scope=col>AMT_REQ_CREDIT_BUREAU_QRT</th><th scope=col>AMT_REQ_CREDIT_BUREAU_YEAR</th></tr>\n",
+       "\t<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>⋯</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><th scope=row>1</th><td>100002</td><td>1</td><td>Cash loans     </td><td>M</td><td>N</td><td>Y</td><td>0</td><td>202500</td><td> 406597.5</td><td>24700.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 1</td></tr>\n",
+       "\t<tr><th scope=row>2</th><td>100003</td><td>0</td><td>Cash loans     </td><td>F</td><td>N</td><td>N</td><td>0</td><td>270000</td><td>1293502.5</td><td>35698.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "\t<tr><th scope=row>3</th><td>100004</td><td>0</td><td>Revolving loans</td><td>M</td><td>Y</td><td>Y</td><td>0</td><td> 67500</td><td> 135000.0</td><td> 6750.0</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "\t<tr><th scope=row>4</th><td>100006</td><td>0</td><td>Cash loans     </td><td>F</td><td>N</td><td>Y</td><td>0</td><td>135000</td><td> 312682.5</td><td>29686.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>\n",
+       "\t<tr><th scope=row>5</th><td>100007</td><td>0</td><td>Cash loans     </td><td>M</td><td>N</td><td>Y</td><td>0</td><td>121500</td><td> 513000.0</td><td>21865.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A data.frame: 5 × 122\n",
+       "\\begin{tabular}{r|lllllllllllllllllllll}\n",
+       "  & SK\\_ID\\_CURR & TARGET & NAME\\_CONTRACT\\_TYPE & CODE\\_GENDER & FLAG\\_OWN\\_CAR & FLAG\\_OWN\\_REALTY & CNT\\_CHILDREN & AMT\\_INCOME\\_TOTAL & AMT\\_CREDIT & AMT\\_ANNUITY & ⋯ & FLAG\\_DOCUMENT\\_18 & FLAG\\_DOCUMENT\\_19 & FLAG\\_DOCUMENT\\_20 & FLAG\\_DOCUMENT\\_21 & AMT\\_REQ\\_CREDIT\\_BUREAU\\_HOUR & AMT\\_REQ\\_CREDIT\\_BUREAU\\_DAY & AMT\\_REQ\\_CREDIT\\_BUREAU\\_WEEK & AMT\\_REQ\\_CREDIT\\_BUREAU\\_MON & AMT\\_REQ\\_CREDIT\\_BUREAU\\_QRT & AMT\\_REQ\\_CREDIT\\_BUREAU\\_YEAR\\\\\n",
+       "  & <int> & <int> & <chr> & <chr> & <chr> & <chr> & <int> & <dbl> & <dbl> & <dbl> & ⋯ & <int> & <int> & <int> & <int> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl>\\\\\n",
+       "\\hline\n",
+       "\t1 & 100002 & 1 & Cash loans      & M & N & Y & 0 & 202500 &  406597.5 & 24700.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  1\\\\\n",
+       "\t2 & 100003 & 0 & Cash loans      & F & N & N & 0 & 270000 & 1293502.5 & 35698.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\t3 & 100004 & 0 & Revolving loans & M & Y & Y & 0 &  67500 &  135000.0 &  6750.0 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\t4 & 100006 & 0 & Cash loans      & F & N & Y & 0 & 135000 &  312682.5 & 29686.5 & ⋯ & 0 & 0 & 0 & 0 & NA & NA & NA & NA & NA & NA\\\\\n",
+       "\t5 & 100007 & 0 & Cash loans      & M & N & Y & 0 & 121500 &  513000.0 & 21865.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A data.frame: 5 × 122\n",
+       "\n",
+       "| <!--/--> | SK_ID_CURR &lt;int&gt; | TARGET &lt;int&gt; | NAME_CONTRACT_TYPE &lt;chr&gt; | CODE_GENDER &lt;chr&gt; | FLAG_OWN_CAR &lt;chr&gt; | FLAG_OWN_REALTY &lt;chr&gt; | CNT_CHILDREN &lt;int&gt; | AMT_INCOME_TOTAL &lt;dbl&gt; | AMT_CREDIT &lt;dbl&gt; | AMT_ANNUITY &lt;dbl&gt; | ⋯ ⋯ | FLAG_DOCUMENT_18 &lt;int&gt; | FLAG_DOCUMENT_19 &lt;int&gt; | FLAG_DOCUMENT_20 &lt;int&gt; | FLAG_DOCUMENT_21 &lt;int&gt; | AMT_REQ_CREDIT_BUREAU_HOUR &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_DAY &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_WEEK &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_MON &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_QRT &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_YEAR &lt;dbl&gt; |\n",
+       "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n",
+       "| 1 | 100002 | 1 | Cash loans      | M | N | Y | 0 | 202500 |  406597.5 | 24700.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  1 |\n",
+       "| 2 | 100003 | 0 | Cash loans      | F | N | N | 0 | 270000 | 1293502.5 | 35698.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "| 3 | 100004 | 0 | Revolving loans | M | Y | Y | 0 |  67500 |  135000.0 |  6750.0 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "| 4 | 100006 | 0 | Cash loans      | F | N | Y | 0 | 135000 |  312682.5 | 29686.5 | ⋯ | 0 | 0 | 0 | 0 | NA | NA | NA | NA | NA | NA |\n",
+       "| 5 | 100007 | 0 | Cash loans      | M | N | Y | 0 | 121500 |  513000.0 | 21865.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "  SK_ID_CURR TARGET NAME_CONTRACT_TYPE CODE_GENDER FLAG_OWN_CAR FLAG_OWN_REALTY\n",
+       "1 100002     1      Cash loans         M           N            Y              \n",
+       "2 100003     0      Cash loans         F           N            N              \n",
+       "3 100004     0      Revolving loans    M           Y            Y              \n",
+       "4 100006     0      Cash loans         F           N            Y              \n",
+       "5 100007     0      Cash loans         M           N            Y              \n",
+       "  CNT_CHILDREN AMT_INCOME_TOTAL AMT_CREDIT AMT_ANNUITY ⋯ FLAG_DOCUMENT_18\n",
+       "1 0            202500            406597.5  24700.5     ⋯ 0               \n",
+       "2 0            270000           1293502.5  35698.5     ⋯ 0               \n",
+       "3 0             67500            135000.0   6750.0     ⋯ 0               \n",
+       "4 0            135000            312682.5  29686.5     ⋯ 0               \n",
+       "5 0            121500            513000.0  21865.5     ⋯ 0               \n",
+       "  FLAG_DOCUMENT_19 FLAG_DOCUMENT_20 FLAG_DOCUMENT_21 AMT_REQ_CREDIT_BUREAU_HOUR\n",
+       "1 0                0                0                 0                        \n",
+       "2 0                0                0                 0                        \n",
+       "3 0                0                0                 0                        \n",
+       "4 0                0                0                NA                        \n",
+       "5 0                0                0                 0                        \n",
+       "  AMT_REQ_CREDIT_BUREAU_DAY AMT_REQ_CREDIT_BUREAU_WEEK\n",
+       "1  0                         0                        \n",
+       "2  0                         0                        \n",
+       "3  0                         0                        \n",
+       "4 NA                        NA                        \n",
+       "5  0                         0                        \n",
+       "  AMT_REQ_CREDIT_BUREAU_MON AMT_REQ_CREDIT_BUREAU_QRT\n",
+       "1  0                         0                       \n",
+       "2  0                         0                       \n",
+       "3  0                         0                       \n",
+       "4 NA                        NA                       \n",
+       "5  0                         0                       \n",
+       "  AMT_REQ_CREDIT_BUREAU_YEAR\n",
+       "1  1                        \n",
+       "2  0                        \n",
+       "3  0                        \n",
+       "4 NA                        \n",
+       "5  0                        "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "head(curr_data,n=5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "c79f8747",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:48.276708Z",
+     "iopub.status.busy": "2022-09-14T02:39:48.275087Z",
+     "iopub.status.idle": "2022-09-14T02:39:48.901078Z",
+     "shell.execute_reply": "2022-09-14T02:39:48.898863Z"
+    },
+    "papermill": {
+     "duration": 0.635511,
+     "end_time": "2022-09-14T02:39:48.903992",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:48.268481",
      "status": "completed"
     },
     "tags": []
@@ -331,19 +483,19 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "c1b496e9",
+   "id": "f80736a5",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2022-09-13T05:33:28.923213Z",
-     "iopub.status.busy": "2022-09-13T05:33:28.921202Z",
-     "iopub.status.idle": "2022-09-13T05:33:29.121571Z",
-     "shell.execute_reply": "2022-09-13T05:33:29.118678Z"
+     "iopub.execute_input": "2022-09-14T02:39:48.917541Z",
+     "iopub.status.busy": "2022-09-14T02:39:48.916066Z",
+     "iopub.status.idle": "2022-09-14T02:39:49.074725Z",
+     "shell.execute_reply": "2022-09-14T02:39:49.071889Z"
     },
     "papermill": {
-     "duration": 0.20914,
-     "end_time": "2022-09-13T05:33:29.125026",
+     "duration": 0.168627,
+     "end_time": "2022-09-14T02:39:49.077994",
      "exception": false,
-     "start_time": "2022-09-13T05:33:28.915886",
+     "start_time": "2022-09-14T02:39:48.909367",
      "status": "completed"
     },
     "tags": []
@@ -744,6 +896,849 @@
     "#finding sum of null values in every column\n",
     "colSums(is.na(curr_data))"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "c017f551",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:49.093649Z",
+     "iopub.status.busy": "2022-09-14T02:39:49.092032Z",
+     "iopub.status.idle": "2022-09-14T02:39:49.110303Z",
+     "shell.execute_reply": "2022-09-14T02:39:49.108202Z"
+    },
+    "papermill": {
+     "duration": 0.028979,
+     "end_time": "2022-09-14T02:39:49.112976",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:49.083997",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<style>\n",
+       ".list-inline {list-style: none; margin:0; padding: 0}\n",
+       ".list-inline>li {display: inline-block}\n",
+       ".list-inline>li:not(:last-child)::after {content: \"\\00b7\"; padding: 0 .5ex}\n",
+       "</style>\n",
+       "<ol class=list-inline><li>307511</li><li>122</li></ol>\n"
+      ],
+      "text/latex": [
+       "\\begin{enumerate*}\n",
+       "\\item 307511\n",
+       "\\item 122\n",
+       "\\end{enumerate*}\n"
+      ],
+      "text/markdown": [
+       "1. 307511\n",
+       "2. 122\n",
+       "\n",
+       "\n"
+      ],
+      "text/plain": [
+       "[1] 307511    122"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "dim(curr_data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f3150dee",
+   "metadata": {
+    "papermill": {
+     "duration": 0.006121,
+     "end_time": "2022-09-14T02:39:49.125035",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:49.118914",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "Since there are many columns with null rows ranging from 1021 to 21,000 as well the accuracy of data will be affected hence, we should drop columns with more than 50% null values."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "d1edf439",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:49.140587Z",
+     "iopub.status.busy": "2022-09-14T02:39:49.139068Z",
+     "iopub.status.idle": "2022-09-14T02:39:50.274285Z",
+     "shell.execute_reply": "2022-09-14T02:39:50.271750Z"
+    },
+    "papermill": {
+     "duration": 1.146143,
+     "end_time": "2022-09-14T02:39:50.277236",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:49.131093",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "   SK_ID_CURR         TARGET        NAME_CONTRACT_TYPE CODE_GENDER       \n",
+       " Min.   :100002   Min.   :0.00000   Length:307511      Length:307511     \n",
+       " 1st Qu.:189146   1st Qu.:0.00000   Class :character   Class :character  \n",
+       " Median :278202   Median :0.00000   Mode  :character   Mode  :character  \n",
+       " Mean   :278180   Mean   :0.08073                                        \n",
+       " 3rd Qu.:367142   3rd Qu.:0.00000                                        \n",
+       " Max.   :456255   Max.   :1.00000                                        \n",
+       "                                                                         \n",
+       " FLAG_OWN_CAR       FLAG_OWN_REALTY     CNT_CHILDREN     AMT_INCOME_TOTAL   \n",
+       " Length:307511      Length:307511      Min.   : 0.0000   Min.   :    25650  \n",
+       " Class :character   Class :character   1st Qu.: 0.0000   1st Qu.:   112500  \n",
+       " Mode  :character   Mode  :character   Median : 0.0000   Median :   147150  \n",
+       "                                       Mean   : 0.4171   Mean   :   168798  \n",
+       "                                       3rd Qu.: 1.0000   3rd Qu.:   202500  \n",
+       "                                       Max.   :19.0000   Max.   :117000000  \n",
+       "                                                                            \n",
+       "   AMT_CREDIT       AMT_ANNUITY     AMT_GOODS_PRICE   NAME_TYPE_SUITE   \n",
+       " Min.   :  45000   Min.   :  1616   Min.   :  40500   Length:307511     \n",
+       " 1st Qu.: 270000   1st Qu.: 16524   1st Qu.: 238500   Class :character  \n",
+       " Median : 513531   Median : 24903   Median : 450000   Mode  :character  \n",
+       " Mean   : 599026   Mean   : 27109   Mean   : 538396                     \n",
+       " 3rd Qu.: 808650   3rd Qu.: 34596   3rd Qu.: 679500                     \n",
+       " Max.   :4050000   Max.   :258026   Max.   :4050000                     \n",
+       "                   NA's   :12       NA's   :278                         \n",
+       " NAME_INCOME_TYPE   NAME_EDUCATION_TYPE NAME_FAMILY_STATUS NAME_HOUSING_TYPE \n",
+       " Length:307511      Length:307511       Length:307511      Length:307511     \n",
+       " Class :character   Class :character    Class :character   Class :character  \n",
+       " Mode  :character   Mode  :character    Mode  :character   Mode  :character  \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       " REGION_POPULATION_RELATIVE   DAYS_BIRTH     DAYS_EMPLOYED    DAYS_REGISTRATION\n",
+       " Min.   :0.00029            Min.   :-25229   Min.   :-17912   Min.   :-24672   \n",
+       " 1st Qu.:0.01001            1st Qu.:-19682   1st Qu.: -2760   1st Qu.: -7480   \n",
+       " Median :0.01885            Median :-15750   Median : -1213   Median : -4504   \n",
+       " Mean   :0.02087            Mean   :-16037   Mean   : 63815   Mean   : -4986   \n",
+       " 3rd Qu.:0.02866            3rd Qu.:-12413   3rd Qu.:  -289   3rd Qu.: -2010   \n",
+       " Max.   :0.07251            Max.   : -7489   Max.   :365243   Max.   :     0   \n",
+       "                                                                               \n",
+       " DAYS_ID_PUBLISH  OWN_CAR_AGE       FLAG_MOBIL FLAG_EMP_PHONE  \n",
+       " Min.   :-7197   Min.   : 0.00    Min.   :0    Min.   :0.0000  \n",
+       " 1st Qu.:-4299   1st Qu.: 5.00    1st Qu.:1    1st Qu.:1.0000  \n",
+       " Median :-3254   Median : 9.00    Median :1    Median :1.0000  \n",
+       " Mean   :-2994   Mean   :12.06    Mean   :1    Mean   :0.8199  \n",
+       " 3rd Qu.:-1720   3rd Qu.:15.00    3rd Qu.:1    3rd Qu.:1.0000  \n",
+       " Max.   :    0   Max.   :91.00    Max.   :1    Max.   :1.0000  \n",
+       "                 NA's   :202929                                \n",
+       " FLAG_WORK_PHONE  FLAG_CONT_MOBILE   FLAG_PHONE       FLAG_EMAIL     \n",
+       " Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  \n",
+       " 1st Qu.:0.0000   1st Qu.:1.0000   1st Qu.:0.0000   1st Qu.:0.00000  \n",
+       " Median :0.0000   Median :1.0000   Median :0.0000   Median :0.00000  \n",
+       " Mean   :0.1994   Mean   :0.9981   Mean   :0.2811   Mean   :0.05672  \n",
+       " 3rd Qu.:0.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:0.00000  \n",
+       " Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.00000  \n",
+       "                                                                     \n",
+       " OCCUPATION_TYPE    CNT_FAM_MEMBERS  REGION_RATING_CLIENT\n",
+       " Length:307511      Min.   : 1.000   Min.   :1.000       \n",
+       " Class :character   1st Qu.: 2.000   1st Qu.:2.000       \n",
+       " Mode  :character   Median : 2.000   Median :2.000       \n",
+       "                    Mean   : 2.153   Mean   :2.052       \n",
+       "                    3rd Qu.: 3.000   3rd Qu.:2.000       \n",
+       "                    Max.   :20.000   Max.   :3.000       \n",
+       "                    NA's   :2                            \n",
+       " REGION_RATING_CLIENT_W_CITY WEEKDAY_APPR_PROCESS_START HOUR_APPR_PROCESS_START\n",
+       " Min.   :1.000               Length:307511              Min.   : 0.00          \n",
+       " 1st Qu.:2.000               Class :character           1st Qu.:10.00          \n",
+       " Median :2.000               Mode  :character           Median :12.00          \n",
+       " Mean   :2.032                                          Mean   :12.06          \n",
+       " 3rd Qu.:2.000                                          3rd Qu.:14.00          \n",
+       " Max.   :3.000                                          Max.   :23.00          \n",
+       "                                                                               \n",
+       " REG_REGION_NOT_LIVE_REGION REG_REGION_NOT_WORK_REGION\n",
+       " Min.   :0.00000            Min.   :0.00000           \n",
+       " 1st Qu.:0.00000            1st Qu.:0.00000           \n",
+       " Median :0.00000            Median :0.00000           \n",
+       " Mean   :0.01514            Mean   :0.05077           \n",
+       " 3rd Qu.:0.00000            3rd Qu.:0.00000           \n",
+       " Max.   :1.00000            Max.   :1.00000           \n",
+       "                                                      \n",
+       " LIVE_REGION_NOT_WORK_REGION REG_CITY_NOT_LIVE_CITY REG_CITY_NOT_WORK_CITY\n",
+       " Min.   :0.00000             Min.   :0.00000        Min.   :0.0000        \n",
+       " 1st Qu.:0.00000             1st Qu.:0.00000        1st Qu.:0.0000        \n",
+       " Median :0.00000             Median :0.00000        Median :0.0000        \n",
+       " Mean   :0.04066             Mean   :0.07817        Mean   :0.2305        \n",
+       " 3rd Qu.:0.00000             3rd Qu.:0.00000        3rd Qu.:0.0000        \n",
+       " Max.   :1.00000             Max.   :1.00000        Max.   :1.0000        \n",
+       "                                                                          \n",
+       " LIVE_CITY_NOT_WORK_CITY ORGANIZATION_TYPE   EXT_SOURCE_1     EXT_SOURCE_2   \n",
+       " Min.   :0.0000          Length:307511      Min.   :0.01     Min.   :0.0000  \n",
+       " 1st Qu.:0.0000          Class :character   1st Qu.:0.33     1st Qu.:0.3925  \n",
+       " Median :0.0000          Mode  :character   Median :0.51     Median :0.5660  \n",
+       " Mean   :0.1796                             Mean   :0.50     Mean   :0.5144  \n",
+       " 3rd Qu.:0.0000                             3rd Qu.:0.68     3rd Qu.:0.6636  \n",
+       " Max.   :1.0000                             Max.   :0.96     Max.   :0.8550  \n",
+       "                                            NA's   :173378   NA's   :660     \n",
+       "  EXT_SOURCE_3   APARTMENTS_AVG   BASEMENTAREA_AVG YEARS_BEGINEXPLUATATION_AVG\n",
+       " Min.   :0.00    Min.   :0.00     Min.   :0.00     Min.   :0.00               \n",
+       " 1st Qu.:0.37    1st Qu.:0.06     1st Qu.:0.04     1st Qu.:0.98               \n",
+       " Median :0.54    Median :0.09     Median :0.08     Median :0.98               \n",
+       " Mean   :0.51    Mean   :0.12     Mean   :0.09     Mean   :0.98               \n",
+       " 3rd Qu.:0.67    3rd Qu.:0.15     3rd Qu.:0.11     3rd Qu.:0.99               \n",
+       " Max.   :0.90    Max.   :1.00     Max.   :1.00     Max.   :1.00               \n",
+       " NA's   :60965   NA's   :156061   NA's   :179943   NA's   :150007             \n",
+       " YEARS_BUILD_AVG  COMMONAREA_AVG   ELEVATORS_AVG    ENTRANCES_AVG   \n",
+       " Min.   :0.00     Min.   :0.00     Min.   :0.00     Min.   :0.00    \n",
+       " 1st Qu.:0.69     1st Qu.:0.01     1st Qu.:0.00     1st Qu.:0.07    \n",
+       " Median :0.76     Median :0.02     Median :0.00     Median :0.14    \n",
+       " Mean   :0.75     Mean   :0.04     Mean   :0.08     Mean   :0.15    \n",
+       " 3rd Qu.:0.82     3rd Qu.:0.05     3rd Qu.:0.12     3rd Qu.:0.21    \n",
+       " Max.   :1.00     Max.   :1.00     Max.   :1.00     Max.   :1.00    \n",
+       " NA's   :204488   NA's   :214865   NA's   :163891   NA's   :154828  \n",
+       " FLOORSMAX_AVG    FLOORSMIN_AVG     LANDAREA_AVG    LIVINGAPARTMENTS_AVG\n",
+       " Min.   :0.00     Min.   :0.00     Min.   :0.00     Min.   :0.00        \n",
+       " 1st Qu.:0.17     1st Qu.:0.08     1st Qu.:0.02     1st Qu.:0.05        \n",
+       " Median :0.17     Median :0.21     Median :0.05     Median :0.08        \n",
+       " Mean   :0.23     Mean   :0.23     Mean   :0.07     Mean   :0.10        \n",
+       " 3rd Qu.:0.33     3rd Qu.:0.38     3rd Qu.:0.09     3rd Qu.:0.12        \n",
+       " Max.   :1.00     Max.   :1.00     Max.   :1.00     Max.   :1.00        \n",
+       " NA's   :153020   NA's   :208642   NA's   :182590   NA's   :210199      \n",
+       " LIVINGAREA_AVG   NONLIVINGAPARTMENTS_AVG NONLIVINGAREA_AVG APARTMENTS_MODE \n",
+       " Min.   :0.00     Min.   :0.00            Min.   :0.00      Min.   :0.00    \n",
+       " 1st Qu.:0.05     1st Qu.:0.00            1st Qu.:0.00      1st Qu.:0.05    \n",
+       " Median :0.07     Median :0.00            Median :0.00      Median :0.08    \n",
+       " Mean   :0.11     Mean   :0.01            Mean   :0.03      Mean   :0.11    \n",
+       " 3rd Qu.:0.13     3rd Qu.:0.00            3rd Qu.:0.03      3rd Qu.:0.14    \n",
+       " Max.   :1.00     Max.   :1.00            Max.   :1.00      Max.   :1.00    \n",
+       " NA's   :154350   NA's   :213514          NA's   :169682    NA's   :156061  \n",
+       " BASEMENTAREA_MODE YEARS_BEGINEXPLUATATION_MODE YEARS_BUILD_MODE\n",
+       " Min.   :0.00      Min.   :0.00                 Min.   :0.00    \n",
+       " 1st Qu.:0.04      1st Qu.:0.98                 1st Qu.:0.70    \n",
+       " Median :0.07      Median :0.98                 Median :0.76    \n",
+       " Mean   :0.09      Mean   :0.98                 Mean   :0.76    \n",
+       " 3rd Qu.:0.11      3rd Qu.:0.99                 3rd Qu.:0.82    \n",
+       " Max.   :1.00      Max.   :1.00                 Max.   :1.00    \n",
+       " NA's   :179943    NA's   :150007               NA's   :204488  \n",
+       " COMMONAREA_MODE  ELEVATORS_MODE   ENTRANCES_MODE   FLOORSMAX_MODE  \n",
+       " Min.   :0.00     Min.   :0.00     Min.   :0.00     Min.   :0.00    \n",
+       " 1st Qu.:0.01     1st Qu.:0.00     1st Qu.:0.07     1st Qu.:0.17    \n",
+       " Median :0.02     Median :0.00     Median :0.14     Median :0.17    \n",
+       " Mean   :0.04     Mean   :0.07     Mean   :0.15     Mean   :0.22    \n",
+       " 3rd Qu.:0.05     3rd Qu.:0.12     3rd Qu.:0.21     3rd Qu.:0.33    \n",
+       " Max.   :1.00     Max.   :1.00     Max.   :1.00     Max.   :1.00    \n",
+       " NA's   :214865   NA's   :163891   NA's   :154828   NA's   :153020  \n",
+       " FLOORSMIN_MODE   LANDAREA_MODE    LIVINGAPARTMENTS_MODE LIVINGAREA_MODE \n",
+       " Min.   :0.00     Min.   :0.00     Min.   :0.00          Min.   :0.00    \n",
+       " 1st Qu.:0.08     1st Qu.:0.02     1st Qu.:0.05          1st Qu.:0.04    \n",
+       " Median :0.21     Median :0.05     Median :0.08          Median :0.07    \n",
+       " Mean   :0.23     Mean   :0.06     Mean   :0.11          Mean   :0.11    \n",
+       " 3rd Qu.:0.38     3rd Qu.:0.08     3rd Qu.:0.13          3rd Qu.:0.13    \n",
+       " Max.   :1.00     Max.   :1.00     Max.   :1.00          Max.   :1.00    \n",
+       " NA's   :208642   NA's   :182590   NA's   :210199        NA's   :154350  \n",
+       " NONLIVINGAPARTMENTS_MODE NONLIVINGAREA_MODE APARTMENTS_MEDI  BASEMENTAREA_MEDI\n",
+       " Min.   :0.00             Min.   :0.00       Min.   :0.00     Min.   :0.00     \n",
+       " 1st Qu.:0.00             1st Qu.:0.00       1st Qu.:0.06     1st Qu.:0.04     \n",
+       " Median :0.00             Median :0.00       Median :0.09     Median :0.08     \n",
+       " Mean   :0.01             Mean   :0.03       Mean   :0.12     Mean   :0.09     \n",
+       " 3rd Qu.:0.00             3rd Qu.:0.02       3rd Qu.:0.15     3rd Qu.:0.11     \n",
+       " Max.   :1.00             Max.   :1.00       Max.   :1.00     Max.   :1.00     \n",
+       " NA's   :213514           NA's   :169682     NA's   :156061   NA's   :179943   \n",
+       " YEARS_BEGINEXPLUATATION_MEDI YEARS_BUILD_MEDI COMMONAREA_MEDI \n",
+       " Min.   :0.00                 Min.   :0.00     Min.   :0.00    \n",
+       " 1st Qu.:0.98                 1st Qu.:0.69     1st Qu.:0.01    \n",
+       " Median :0.98                 Median :0.76     Median :0.02    \n",
+       " Mean   :0.98                 Mean   :0.76     Mean   :0.04    \n",
+       " 3rd Qu.:0.99                 3rd Qu.:0.83     3rd Qu.:0.05    \n",
+       " Max.   :1.00                 Max.   :1.00     Max.   :1.00    \n",
+       " NA's   :150007               NA's   :204488   NA's   :214865  \n",
+       " ELEVATORS_MEDI   ENTRANCES_MEDI   FLOORSMAX_MEDI   FLOORSMIN_MEDI  \n",
+       " Min.   :0.00     Min.   :0.00     Min.   :0.00     Min.   :0.00    \n",
+       " 1st Qu.:0.00     1st Qu.:0.07     1st Qu.:0.17     1st Qu.:0.08    \n",
+       " Median :0.00     Median :0.14     Median :0.17     Median :0.21    \n",
+       " Mean   :0.08     Mean   :0.15     Mean   :0.23     Mean   :0.23    \n",
+       " 3rd Qu.:0.12     3rd Qu.:0.21     3rd Qu.:0.33     3rd Qu.:0.38    \n",
+       " Max.   :1.00     Max.   :1.00     Max.   :1.00     Max.   :1.00    \n",
+       " NA's   :163891   NA's   :154828   NA's   :153020   NA's   :208642  \n",
+       " LANDAREA_MEDI    LIVINGAPARTMENTS_MEDI LIVINGAREA_MEDI \n",
+       " Min.   :0.00     Min.   :0.00          Min.   :0.00    \n",
+       " 1st Qu.:0.02     1st Qu.:0.05          1st Qu.:0.05    \n",
+       " Median :0.05     Median :0.08          Median :0.07    \n",
+       " Mean   :0.07     Mean   :0.10          Mean   :0.11    \n",
+       " 3rd Qu.:0.09     3rd Qu.:0.12          3rd Qu.:0.13    \n",
+       " Max.   :1.00     Max.   :1.00          Max.   :1.00    \n",
+       " NA's   :182590   NA's   :210199        NA's   :154350  \n",
+       " NONLIVINGAPARTMENTS_MEDI NONLIVINGAREA_MEDI FONDKAPREMONT_MODE\n",
+       " Min.   :0.00             Min.   :0.00       Length:307511     \n",
+       " 1st Qu.:0.00             1st Qu.:0.00       Class :character  \n",
+       " Median :0.00             Median :0.00       Mode  :character  \n",
+       " Mean   :0.01             Mean   :0.03                         \n",
+       " 3rd Qu.:0.00             3rd Qu.:0.03                         \n",
+       " Max.   :1.00             Max.   :1.00                         \n",
+       " NA's   :213514           NA's   :169682                       \n",
+       " HOUSETYPE_MODE     TOTALAREA_MODE   WALLSMATERIAL_MODE EMERGENCYSTATE_MODE\n",
+       " Length:307511      Min.   :0.00     Length:307511      Length:307511      \n",
+       " Class :character   1st Qu.:0.04     Class :character   Class :character   \n",
+       " Mode  :character   Median :0.07     Mode  :character   Mode  :character   \n",
+       "                    Mean   :0.10                                           \n",
+       "                    3rd Qu.:0.13                                           \n",
+       "                    Max.   :1.00                                           \n",
+       "                    NA's   :148431                                         \n",
+       " OBS_30_CNT_SOCIAL_CIRCLE DEF_30_CNT_SOCIAL_CIRCLE OBS_60_CNT_SOCIAL_CIRCLE\n",
+       " Min.   :  0.000          Min.   : 0.0000          Min.   :  0.000         \n",
+       " 1st Qu.:  0.000          1st Qu.: 0.0000          1st Qu.:  0.000         \n",
+       " Median :  0.000          Median : 0.0000          Median :  0.000         \n",
+       " Mean   :  1.422          Mean   : 0.1434          Mean   :  1.405         \n",
+       " 3rd Qu.:  2.000          3rd Qu.: 0.0000          3rd Qu.:  2.000         \n",
+       " Max.   :348.000          Max.   :34.0000          Max.   :344.000         \n",
+       " NA's   :1021             NA's   :1021             NA's   :1021            \n",
+       " DEF_60_CNT_SOCIAL_CIRCLE DAYS_LAST_PHONE_CHANGE FLAG_DOCUMENT_2   \n",
+       " Min.   : 0.0             Min.   :-4292.0        Min.   :0.00e+00  \n",
+       " 1st Qu.: 0.0             1st Qu.:-1570.0        1st Qu.:0.00e+00  \n",
+       " Median : 0.0             Median : -757.0        Median :0.00e+00  \n",
+       " Mean   : 0.1             Mean   : -962.9        Mean   :4.23e-05  \n",
+       " 3rd Qu.: 0.0             3rd Qu.: -274.0        3rd Qu.:0.00e+00  \n",
+       " Max.   :24.0             Max.   :    0.0        Max.   :1.00e+00  \n",
+       " NA's   :1021             NA's   :1                                \n",
+       " FLAG_DOCUMENT_3 FLAG_DOCUMENT_4    FLAG_DOCUMENT_5   FLAG_DOCUMENT_6  \n",
+       " Min.   :0.00    Min.   :0.00e+00   Min.   :0.00000   Min.   :0.00000  \n",
+       " 1st Qu.:0.00    1st Qu.:0.00e+00   1st Qu.:0.00000   1st Qu.:0.00000  \n",
+       " Median :1.00    Median :0.00e+00   Median :0.00000   Median :0.00000  \n",
+       " Mean   :0.71    Mean   :8.13e-05   Mean   :0.01511   Mean   :0.08806  \n",
+       " 3rd Qu.:1.00    3rd Qu.:0.00e+00   3rd Qu.:0.00000   3rd Qu.:0.00000  \n",
+       " Max.   :1.00    Max.   :1.00e+00   Max.   :1.00000   Max.   :1.00000  \n",
+       "                                                                       \n",
+       " FLAG_DOCUMENT_7     FLAG_DOCUMENT_8   FLAG_DOCUMENT_9    FLAG_DOCUMENT_10  \n",
+       " Min.   :0.0000000   Min.   :0.00000   Min.   :0.000000   Min.   :0.00e+00  \n",
+       " 1st Qu.:0.0000000   1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.:0.00e+00  \n",
+       " Median :0.0000000   Median :0.00000   Median :0.000000   Median :0.00e+00  \n",
+       " Mean   :0.0001919   Mean   :0.08138   Mean   :0.003896   Mean   :2.28e-05  \n",
+       " 3rd Qu.:0.0000000   3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:0.00e+00  \n",
+       " Max.   :1.0000000   Max.   :1.00000   Max.   :1.000000   Max.   :1.00e+00  \n",
+       "                                                                            \n",
+       " FLAG_DOCUMENT_11   FLAG_DOCUMENT_12  FLAG_DOCUMENT_13   FLAG_DOCUMENT_14  \n",
+       " Min.   :0.000000   Min.   :0.0e+00   Min.   :0.000000   Min.   :0.000000  \n",
+       " 1st Qu.:0.000000   1st Qu.:0.0e+00   1st Qu.:0.000000   1st Qu.:0.000000  \n",
+       " Median :0.000000   Median :0.0e+00   Median :0.000000   Median :0.000000  \n",
+       " Mean   :0.003912   Mean   :6.5e-06   Mean   :0.003525   Mean   :0.002936  \n",
+       " 3rd Qu.:0.000000   3rd Qu.:0.0e+00   3rd Qu.:0.000000   3rd Qu.:0.000000  \n",
+       " Max.   :1.000000   Max.   :1.0e+00   Max.   :1.000000   Max.   :1.000000  \n",
+       "                                                                           \n",
+       " FLAG_DOCUMENT_15  FLAG_DOCUMENT_16   FLAG_DOCUMENT_17    FLAG_DOCUMENT_18 \n",
+       " Min.   :0.00000   Min.   :0.000000   Min.   :0.0000000   Min.   :0.00000  \n",
+       " 1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.:0.0000000   1st Qu.:0.00000  \n",
+       " Median :0.00000   Median :0.000000   Median :0.0000000   Median :0.00000  \n",
+       " Mean   :0.00121   Mean   :0.009928   Mean   :0.0002667   Mean   :0.00813  \n",
+       " 3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:0.0000000   3rd Qu.:0.00000  \n",
+       " Max.   :1.00000   Max.   :1.000000   Max.   :1.0000000   Max.   :1.00000  \n",
+       "                                                                           \n",
+       " FLAG_DOCUMENT_19    FLAG_DOCUMENT_20    FLAG_DOCUMENT_21   \n",
+       " Min.   :0.0000000   Min.   :0.0000000   Min.   :0.0000000  \n",
+       " 1st Qu.:0.0000000   1st Qu.:0.0000000   1st Qu.:0.0000000  \n",
+       " Median :0.0000000   Median :0.0000000   Median :0.0000000  \n",
+       " Mean   :0.0005951   Mean   :0.0005073   Mean   :0.0003349  \n",
+       " 3rd Qu.:0.0000000   3rd Qu.:0.0000000   3rd Qu.:0.0000000  \n",
+       " Max.   :1.0000000   Max.   :1.0000000   Max.   :1.0000000  \n",
+       "                                                            \n",
+       " AMT_REQ_CREDIT_BUREAU_HOUR AMT_REQ_CREDIT_BUREAU_DAY\n",
+       " Min.   :0.00               Min.   :0.00             \n",
+       " 1st Qu.:0.00               1st Qu.:0.00             \n",
+       " Median :0.00               Median :0.00             \n",
+       " Mean   :0.01               Mean   :0.01             \n",
+       " 3rd Qu.:0.00               3rd Qu.:0.00             \n",
+       " Max.   :4.00               Max.   :9.00             \n",
+       " NA's   :41519              NA's   :41519            \n",
+       " AMT_REQ_CREDIT_BUREAU_WEEK AMT_REQ_CREDIT_BUREAU_MON AMT_REQ_CREDIT_BUREAU_QRT\n",
+       " Min.   :0.00               Min.   : 0.00             Min.   :  0.00           \n",
+       " 1st Qu.:0.00               1st Qu.: 0.00             1st Qu.:  0.00           \n",
+       " Median :0.00               Median : 0.00             Median :  0.00           \n",
+       " Mean   :0.03               Mean   : 0.27             Mean   :  0.27           \n",
+       " 3rd Qu.:0.00               3rd Qu.: 0.00             3rd Qu.:  0.00           \n",
+       " Max.   :8.00               Max.   :27.00             Max.   :261.00           \n",
+       " NA's   :41519              NA's   :41519             NA's   :41519            \n",
+       " AMT_REQ_CREDIT_BUREAU_YEAR\n",
+       " Min.   : 0.0              \n",
+       " 1st Qu.: 0.0              \n",
+       " Median : 1.0              \n",
+       " Mean   : 1.9              \n",
+       " 3rd Qu.: 3.0              \n",
+       " Max.   :25.0              \n",
+       " NA's   :41519             "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#getting elaborate details about each attribute in the data \n",
+    "summary(curr_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "0c197606",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:50.293863Z",
+     "iopub.status.busy": "2022-09-14T02:39:50.292305Z",
+     "iopub.status.idle": "2022-09-14T02:39:51.641147Z",
+     "shell.execute_reply": "2022-09-14T02:39:51.639545Z"
+    },
+    "papermill": {
+     "duration": 1.359601,
+     "end_time": "2022-09-14T02:39:51.643422",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:50.283821",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "   SK_ID_PREV        SK_ID_CURR     NAME_CONTRACT_TYPE  AMT_ANNUITY    \n",
+       " Min.   :1000001   Min.   :100001   Length:1670214     Min.   :     0  \n",
+       " 1st Qu.:1461857   1st Qu.:189329   Class :character   1st Qu.:  6322  \n",
+       " Median :1923110   Median :278714   Mode  :character   Median : 11250  \n",
+       " Mean   :1923089   Mean   :278357                      Mean   : 15955  \n",
+       " 3rd Qu.:2384280   3rd Qu.:367514                      3rd Qu.: 20658  \n",
+       " Max.   :2845382   Max.   :456255                      Max.   :418058  \n",
+       "                                                       NA's   :372235  \n",
+       " AMT_APPLICATION     AMT_CREDIT      AMT_DOWN_PAYMENT    AMT_GOODS_PRICE  \n",
+       " Min.   :      0   Min.   :      0   Min.   :     -0.9   Min.   :      0  \n",
+       " 1st Qu.:  18720   1st Qu.:  24160   1st Qu.:      0.0   1st Qu.:  50841  \n",
+       " Median :  71046   Median :  80541   Median :   1638.0   Median : 112320  \n",
+       " Mean   : 175234   Mean   : 196114   Mean   :   6697.4   Mean   : 227847  \n",
+       " 3rd Qu.: 180360   3rd Qu.: 216418   3rd Qu.:   7740.0   3rd Qu.: 234000  \n",
+       " Max.   :6905160   Max.   :6905160   Max.   :3060045.0   Max.   :6905160  \n",
+       "                   NA's   :1         NA's   :895844      NA's   :385515   \n",
+       " WEEKDAY_APPR_PROCESS_START HOUR_APPR_PROCESS_START FLAG_LAST_APPL_PER_CONTRACT\n",
+       " Length:1670214             Min.   : 0.00           Length:1670214             \n",
+       " Class :character           1st Qu.:10.00           Class :character           \n",
+       " Mode  :character           Median :12.00           Mode  :character           \n",
+       "                            Mean   :12.48                                      \n",
+       "                            3rd Qu.:15.00                                      \n",
+       "                            Max.   :23.00                                      \n",
+       "                                                                               \n",
+       " NFLAG_LAST_APPL_IN_DAY RATE_DOWN_PAYMENT RATE_INTEREST_PRIMARY\n",
+       " Min.   :0.0000         Min.   :0.0       Min.   :0.0          \n",
+       " 1st Qu.:1.0000         1st Qu.:0.0       1st Qu.:0.2          \n",
+       " Median :1.0000         Median :0.1       Median :0.2          \n",
+       " Mean   :0.9965         Mean   :0.1       Mean   :0.2          \n",
+       " 3rd Qu.:1.0000         3rd Qu.:0.1       3rd Qu.:0.2          \n",
+       " Max.   :1.0000         Max.   :1.0       Max.   :1.0          \n",
+       "                        NA's   :895844    NA's   :1664263      \n",
+       " RATE_INTEREST_PRIVILEGED NAME_CASH_LOAN_PURPOSE NAME_CONTRACT_STATUS\n",
+       " Min.   :0.4              Length:1670214         Length:1670214      \n",
+       " 1st Qu.:0.7              Class :character       Class :character    \n",
+       " Median :0.8              Mode  :character       Mode  :character    \n",
+       " Mean   :0.8                                                         \n",
+       " 3rd Qu.:0.9                                                         \n",
+       " Max.   :1.0                                                         \n",
+       " NA's   :1664263                                                     \n",
+       " DAYS_DECISION     NAME_PAYMENT_TYPE  CODE_REJECT_REASON NAME_TYPE_SUITE   \n",
+       " Min.   :-2922.0   Length:1670214     Length:1670214     Length:1670214    \n",
+       " 1st Qu.:-1300.0   Class :character   Class :character   Class :character  \n",
+       " Median : -581.0   Mode  :character   Mode  :character   Mode  :character  \n",
+       " Mean   : -880.7                                                           \n",
+       " 3rd Qu.: -280.0                                                           \n",
+       " Max.   :   -1.0                                                           \n",
+       "                                                                           \n",
+       " NAME_CLIENT_TYPE   NAME_GOODS_CATEGORY NAME_PORTFOLIO     NAME_PRODUCT_TYPE \n",
+       " Length:1670214     Length:1670214      Length:1670214     Length:1670214    \n",
+       " Class :character   Class :character    Class :character   Class :character  \n",
+       " Mode  :character   Mode  :character    Mode  :character   Mode  :character  \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       "                                                                             \n",
+       " CHANNEL_TYPE       SELLERPLACE_AREA  NAME_SELLER_INDUSTRY  CNT_PAYMENT    \n",
+       " Length:1670214     Min.   :     -1   Length:1670214       Min.   : 0.0    \n",
+       " Class :character   1st Qu.:     -1   Class :character     1st Qu.: 6.0    \n",
+       " Mode  :character   Median :      3   Mode  :character     Median :12.0    \n",
+       "                    Mean   :    314                        Mean   :16.1    \n",
+       "                    3rd Qu.:     82                        3rd Qu.:24.0    \n",
+       "                    Max.   :4000000                        Max.   :84.0    \n",
+       "                                                           NA's   :372230  \n",
+       " NAME_YIELD_GROUP   PRODUCT_COMBINATION DAYS_FIRST_DRAWING DAYS_FIRST_DUE  \n",
+       " Length:1670214     Length:1670214      Min.   : -2922     Min.   : -2892  \n",
+       " Class :character   Class :character    1st Qu.:365243     1st Qu.: -1628  \n",
+       " Mode  :character   Mode  :character    Median :365243     Median :  -831  \n",
+       "                                        Mean   :342210     Mean   : 13826  \n",
+       "                                        3rd Qu.:365243     3rd Qu.:  -411  \n",
+       "                                        Max.   :365243     Max.   :365243  \n",
+       "                                        NA's   :673065     NA's   :673065  \n",
+       " DAYS_LAST_DUE_1ST_VERSION DAYS_LAST_DUE    DAYS_TERMINATION\n",
+       " Min.   : -2801            Min.   : -2889   Min.   : -2874  \n",
+       " 1st Qu.: -1242            1st Qu.: -1314   1st Qu.: -1270  \n",
+       " Median :  -361            Median :  -537   Median :  -499  \n",
+       " Mean   : 33768            Mean   : 76582   Mean   : 81992  \n",
+       " 3rd Qu.:   129            3rd Qu.:   -74   3rd Qu.:   -44  \n",
+       " Max.   :365243            Max.   :365243   Max.   :365243  \n",
+       " NA's   :673065            NA's   :673065   NA's   :673065  \n",
+       " NFLAG_INSURED_ON_APPROVAL\n",
+       " Min.   :0.0              \n",
+       " 1st Qu.:0.0              \n",
+       " Median :0.0              \n",
+       " Mean   :0.3              \n",
+       " 3rd Qu.:1.0              \n",
+       " Max.   :1.0              \n",
+       " NA's   :673065           "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "summary(prev_data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "73dc8027",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:51.665547Z",
+     "iopub.status.busy": "2022-09-14T02:39:51.664099Z",
+     "iopub.status.idle": "2022-09-14T02:39:51.915133Z",
+     "shell.execute_reply": "2022-09-14T02:39:51.913431Z"
+    },
+    "papermill": {
+     "duration": 0.26759,
+     "end_time": "2022-09-14T02:39:51.917887",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:51.650297",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A data.frame: 6 × 84</caption>\n",
+       "<thead>\n",
+       "\t<tr><th></th><th scope=col>SK_ID_CURR</th><th scope=col>TARGET</th><th scope=col>NAME_CONTRACT_TYPE</th><th scope=col>CODE_GENDER</th><th scope=col>FLAG_OWN_CAR</th><th scope=col>FLAG_OWN_REALTY</th><th scope=col>CNT_CHILDREN</th><th scope=col>AMT_INCOME_TOTAL</th><th scope=col>AMT_CREDIT</th><th scope=col>AMT_ANNUITY</th><th scope=col>⋯</th><th scope=col>FLAG_DOCUMENT_18</th><th scope=col>FLAG_DOCUMENT_19</th><th scope=col>FLAG_DOCUMENT_20</th><th scope=col>FLAG_DOCUMENT_21</th><th scope=col>AMT_REQ_CREDIT_BUREAU_HOUR</th><th scope=col>AMT_REQ_CREDIT_BUREAU_DAY</th><th scope=col>AMT_REQ_CREDIT_BUREAU_WEEK</th><th scope=col>AMT_REQ_CREDIT_BUREAU_MON</th><th scope=col>AMT_REQ_CREDIT_BUREAU_QRT</th><th scope=col>AMT_REQ_CREDIT_BUREAU_YEAR</th></tr>\n",
+       "\t<tr><th></th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>⋯</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><th scope=row>1</th><td>100002</td><td>1</td><td>Cash loans     </td><td>M</td><td>N</td><td>Y</td><td>0</td><td>202500</td><td> 406597.5</td><td>24700.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 1</td></tr>\n",
+       "\t<tr><th scope=row>2</th><td>100003</td><td>0</td><td>Cash loans     </td><td>F</td><td>N</td><td>N</td><td>0</td><td>270000</td><td>1293502.5</td><td>35698.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "\t<tr><th scope=row>3</th><td>100004</td><td>0</td><td>Revolving loans</td><td>M</td><td>Y</td><td>Y</td><td>0</td><td> 67500</td><td> 135000.0</td><td> 6750.0</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "\t<tr><th scope=row>4</th><td>100006</td><td>0</td><td>Cash loans     </td><td>F</td><td>N</td><td>Y</td><td>0</td><td>135000</td><td> 312682.5</td><td>29686.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>\n",
+       "\t<tr><th scope=row>5</th><td>100007</td><td>0</td><td>Cash loans     </td><td>M</td><td>N</td><td>Y</td><td>0</td><td>121500</td><td> 513000.0</td><td>21865.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td></tr>\n",
+       "\t<tr><th scope=row>6</th><td>100008</td><td>0</td><td>Cash loans     </td><td>M</td><td>N</td><td>Y</td><td>0</td><td> 99000</td><td> 490495.5</td><td>27517.5</td><td>⋯</td><td>0</td><td>0</td><td>0</td><td>0</td><td> 0</td><td> 0</td><td> 0</td><td> 0</td><td> 1</td><td> 1</td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A data.frame: 6 × 84\n",
+       "\\begin{tabular}{r|lllllllllllllllllllll}\n",
+       "  & SK\\_ID\\_CURR & TARGET & NAME\\_CONTRACT\\_TYPE & CODE\\_GENDER & FLAG\\_OWN\\_CAR & FLAG\\_OWN\\_REALTY & CNT\\_CHILDREN & AMT\\_INCOME\\_TOTAL & AMT\\_CREDIT & AMT\\_ANNUITY & ⋯ & FLAG\\_DOCUMENT\\_18 & FLAG\\_DOCUMENT\\_19 & FLAG\\_DOCUMENT\\_20 & FLAG\\_DOCUMENT\\_21 & AMT\\_REQ\\_CREDIT\\_BUREAU\\_HOUR & AMT\\_REQ\\_CREDIT\\_BUREAU\\_DAY & AMT\\_REQ\\_CREDIT\\_BUREAU\\_WEEK & AMT\\_REQ\\_CREDIT\\_BUREAU\\_MON & AMT\\_REQ\\_CREDIT\\_BUREAU\\_QRT & AMT\\_REQ\\_CREDIT\\_BUREAU\\_YEAR\\\\\n",
+       "  & <int> & <int> & <chr> & <chr> & <chr> & <chr> & <int> & <dbl> & <dbl> & <dbl> & ⋯ & <int> & <int> & <int> & <int> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl> & <dbl>\\\\\n",
+       "\\hline\n",
+       "\t1 & 100002 & 1 & Cash loans      & M & N & Y & 0 & 202500 &  406597.5 & 24700.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  1\\\\\n",
+       "\t2 & 100003 & 0 & Cash loans      & F & N & N & 0 & 270000 & 1293502.5 & 35698.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\t3 & 100004 & 0 & Revolving loans & M & Y & Y & 0 &  67500 &  135000.0 &  6750.0 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\t4 & 100006 & 0 & Cash loans      & F & N & Y & 0 & 135000 &  312682.5 & 29686.5 & ⋯ & 0 & 0 & 0 & 0 & NA & NA & NA & NA & NA & NA\\\\\n",
+       "\t5 & 100007 & 0 & Cash loans      & M & N & Y & 0 & 121500 &  513000.0 & 21865.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  0 &  0\\\\\n",
+       "\t6 & 100008 & 0 & Cash loans      & M & N & Y & 0 &  99000 &  490495.5 & 27517.5 & ⋯ & 0 & 0 & 0 & 0 &  0 &  0 &  0 &  0 &  1 &  1\\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A data.frame: 6 × 84\n",
+       "\n",
+       "| <!--/--> | SK_ID_CURR &lt;int&gt; | TARGET &lt;int&gt; | NAME_CONTRACT_TYPE &lt;chr&gt; | CODE_GENDER &lt;chr&gt; | FLAG_OWN_CAR &lt;chr&gt; | FLAG_OWN_REALTY &lt;chr&gt; | CNT_CHILDREN &lt;int&gt; | AMT_INCOME_TOTAL &lt;dbl&gt; | AMT_CREDIT &lt;dbl&gt; | AMT_ANNUITY &lt;dbl&gt; | ⋯ ⋯ | FLAG_DOCUMENT_18 &lt;int&gt; | FLAG_DOCUMENT_19 &lt;int&gt; | FLAG_DOCUMENT_20 &lt;int&gt; | FLAG_DOCUMENT_21 &lt;int&gt; | AMT_REQ_CREDIT_BUREAU_HOUR &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_DAY &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_WEEK &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_MON &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_QRT &lt;dbl&gt; | AMT_REQ_CREDIT_BUREAU_YEAR &lt;dbl&gt; |\n",
+       "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n",
+       "| 1 | 100002 | 1 | Cash loans      | M | N | Y | 0 | 202500 |  406597.5 | 24700.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  1 |\n",
+       "| 2 | 100003 | 0 | Cash loans      | F | N | N | 0 | 270000 | 1293502.5 | 35698.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "| 3 | 100004 | 0 | Revolving loans | M | Y | Y | 0 |  67500 |  135000.0 |  6750.0 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "| 4 | 100006 | 0 | Cash loans      | F | N | Y | 0 | 135000 |  312682.5 | 29686.5 | ⋯ | 0 | 0 | 0 | 0 | NA | NA | NA | NA | NA | NA |\n",
+       "| 5 | 100007 | 0 | Cash loans      | M | N | Y | 0 | 121500 |  513000.0 | 21865.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  0 |  0 |\n",
+       "| 6 | 100008 | 0 | Cash loans      | M | N | Y | 0 |  99000 |  490495.5 | 27517.5 | ⋯ | 0 | 0 | 0 | 0 |  0 |  0 |  0 |  0 |  1 |  1 |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "  SK_ID_CURR TARGET NAME_CONTRACT_TYPE CODE_GENDER FLAG_OWN_CAR FLAG_OWN_REALTY\n",
+       "1 100002     1      Cash loans         M           N            Y              \n",
+       "2 100003     0      Cash loans         F           N            N              \n",
+       "3 100004     0      Revolving loans    M           Y            Y              \n",
+       "4 100006     0      Cash loans         F           N            Y              \n",
+       "5 100007     0      Cash loans         M           N            Y              \n",
+       "6 100008     0      Cash loans         M           N            Y              \n",
+       "  CNT_CHILDREN AMT_INCOME_TOTAL AMT_CREDIT AMT_ANNUITY ⋯ FLAG_DOCUMENT_18\n",
+       "1 0            202500            406597.5  24700.5     ⋯ 0               \n",
+       "2 0            270000           1293502.5  35698.5     ⋯ 0               \n",
+       "3 0             67500            135000.0   6750.0     ⋯ 0               \n",
+       "4 0            135000            312682.5  29686.5     ⋯ 0               \n",
+       "5 0            121500            513000.0  21865.5     ⋯ 0               \n",
+       "6 0             99000            490495.5  27517.5     ⋯ 0               \n",
+       "  FLAG_DOCUMENT_19 FLAG_DOCUMENT_20 FLAG_DOCUMENT_21 AMT_REQ_CREDIT_BUREAU_HOUR\n",
+       "1 0                0                0                 0                        \n",
+       "2 0                0                0                 0                        \n",
+       "3 0                0                0                 0                        \n",
+       "4 0                0                0                NA                        \n",
+       "5 0                0                0                 0                        \n",
+       "6 0                0                0                 0                        \n",
+       "  AMT_REQ_CREDIT_BUREAU_DAY AMT_REQ_CREDIT_BUREAU_WEEK\n",
+       "1  0                         0                        \n",
+       "2  0                         0                        \n",
+       "3  0                         0                        \n",
+       "4 NA                        NA                        \n",
+       "5  0                         0                        \n",
+       "6  0                         0                        \n",
+       "  AMT_REQ_CREDIT_BUREAU_MON AMT_REQ_CREDIT_BUREAU_QRT\n",
+       "1  0                         0                       \n",
+       "2  0                         0                       \n",
+       "3  0                         0                       \n",
+       "4 NA                        NA                       \n",
+       "5  0                         0                       \n",
+       "6  0                         1                       \n",
+       "  AMT_REQ_CREDIT_BUREAU_YEAR\n",
+       "1  1                        \n",
+       "2  0                        \n",
+       "3  0                        \n",
+       "4 NA                        \n",
+       "5  0                        \n",
+       "6  1                        "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "## Remove columns with more than 50% NA\n",
+    "curr_data <- curr_data[, which(colMeans(!is.na(curr_data)) >= 0.5)]\n",
+    "head(curr_data)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dbc0d661",
+   "metadata": {
+    "papermill": {
+     "duration": 0.008231,
+     "end_time": "2022-09-14T02:39:51.937637",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:51.929406",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "The number of columns has gone down to 84 from 122 which means that 38 columns had more than 50% rows with null values."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "bd2ad549",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:51.957726Z",
+     "iopub.status.busy": "2022-09-14T02:39:51.955053Z",
+     "iopub.status.idle": "2022-09-14T02:39:52.952693Z",
+     "shell.execute_reply": "2022-09-14T02:39:52.949958Z"
+    },
+    "papermill": {
+     "duration": 1.010234,
+     "end_time": "2022-09-14T02:39:52.955312",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:51.945078",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Warning message:\n",
+      "“Removed 2 rows containing non-finite values (stat_boxplot).”\n"
+     ]
+    },
+    {
+     "data": {
+      "image/png": "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\n/XvWhNtnFSetc7OfeGjS7gM3LX+zVHZq7D2fHTmkZ7n7UHznWz9kp1LVub/V3HzZ6SVJkvPT\nTao5SEHn4wYdvlGSJJl0yfdfvXvHXXcMmtHqtkHbVWcXeU23GjbkgB/HLlky5YOXbx91x3+T\njtcd0ylJkslPXnLeiPd69Tum77Ed89Pz//PBa/fedM6n86+9YL+NqvMgsAbp27fvwoUL0+l0\nkiRZWVnrrLPOnXfeWVeD77XXXqUjlw4+evTouhq5d+/emUwmlUplMpkkSZ577rm6GnnixIln\nnHFG2QMyZMiQHXfcsa4Gv/jii998882SkpK8vLxDDz30kEMOqauRv/jii1tuueXbb79t3Ljx\ntttue+yxx9bVyOl0+s0335w4cWI6ne7QocNvfvObnJw6e19g3Lhxzz///IwZM9q1a9evX7+N\nN964rkaeN2/e2LFjv/766+bNm3fr1m2zzers79Li4uKRI0e+//776XS6U6dORx99dIMGK/PL\nsVJfffXVxx9//MMPP7Rt23bLLbds1apVXY08bdq0e++9d8qUKc2aNdtxxx179+5dVyNTQXFx\n8d133z1hwoSSkpKOHTseddRRdfgMqVp1X5mtZ791+Zn/vGLQCb/eo9+RRx5x6IG9WubW4DDu\np/cM/ed/W1x95587Ns4tXbLjLrs1HHj4fVc83fvmg0uXrL3DTtNfvf6Bz7Y8dJPmFTZv3nHT\n0kWZkllJkjTtsFmXn97qq1pWbusuXbosb+1rI95v2Hr/k3819vJX7kwPvKr8/Vlnl67fjx2+\nJHNz3k8VteCbB6ak19q5+ewvq7Hfam5e9fSqOUhesw1/HqRrt9ZfvXHhaw8kyXbV2UVWTsvy\na7fo1nPJ2PEPjHk+OaZTkiR3/uP9trtecFr/bqVrN92i52aNvjrj3iuT/W6vxmPAGmPPPfcs\n/2U6nZ42bdqee+5Z+0666aabnn766QqD9+7d+9lnn63lyEm5aZdWXZIkvXv3btmy5ciRI2s5\n8gEHHLBw4cKyL9Pp9GWXXZZKpWo/7fnz5/ft27fsy8WLF991110PPvjg448/XsuRkyS5+OKL\nX3vttdJ/z5w58+uvv37yySfvvPPOli1b1nLk77777rLLLvvss8/KlrRr1+7cc8/daKPa/o1X\nXFz8hz/84auvvir98j//+c/YsWN32WWXs88+u5YjJ0kybty466+/ft68n4/27LzzzmeeeWZe\nXl4tR/7444/PPffcxYsXl345ceLE0aNHDxo0aKeddqrlyOl0+tZbb33qqafKntUNGjQ44YQT\n9tprr1qOnCTJHXfc8eijj5aN/M4779x///1/+9vfmjRpUvWG1FSFZ8hHH3309NNPDx48eIcd\ndlgNe69unL0zadaEsU+ce8J+P7z+0KmH7r5ui/X3P27wo//3cbo6G2eK/vr0pA5HDCqruiRJ\nklROv7NOOLBXo7IFzTr0PXPndR8ZdvXskkxN7sJKKlk85a5Jczc+fPdNjti6aOEn/5i2sPza\nZhscuW4y7d4p88uWfHbf2JZbHNeweg9YLTevzSBZWUl2Xtsa7GZpazfKSWX9+B7qwpLM4lnf\nlV+7fu9Thp5zwur49rC63HTTTctbVfvfJc8888yyCzOZTO1H3nvvvSsdeebMmbUcedKkSeWr\nrvzgV111VS0HP/jgg5ddWFhYeMIJJ9Ry5Mcee6ys6sosXrz4+OOPr+XI6XR62LBhn3/+efmF\n33zzzfnnn19YWFjLwYcOHVpWdaUymczLL7/88MMP13LkSZMmXXHFFfPnzy+/cMyYMbfddlst\nRy4uLh4yZEjZ7+xSRUVFV1555ezZs2s5+AMPPPDkk0+WtVeSJIWFhTfeeOO7775by5FfffXV\nRx55pPzISZJ8//33Z5xxRi1HpoLlPUMuv/zyuXPnroYJVP+99KzNdtj30h32veTmBf8ePWrk\nyJH/uPcvj4+4utkGW/Y/8ogjjzhi247L/aNw8Zwx3y4p2Wv7tSssb77Jrgcsfa7aDqde9Njh\nJ58//J0bB25Zo7uxPOmi7z/55JPySzbZdLPsVJIkyfTX7yjK5By77dpN8o5YO+/ZV+6eeOg5\n5Q56ZuUf13OtW+6acOyF2yRJkmSK/j7++23/vFn6wurtuHqbLzu9rJyCTh3XrdEgS+ZN/uST\nnCRJknTJ95PevW3MD787fVh1d1FOpqhwyoRxt02Zt+2pP/7SPXa/LQY9cNMxZ7722+1+3a1r\n1806ts9rsNFWWy31N/qXX345Y8aMH0fOyurYsWM1Hp2aGTNmzJgxY+p82NXwAhs/fvwVV1xR\n58PuvPPOO++8c12NVuEdtfLS6XRubu7y1q7QtddeW+G3SF2NnCRJcXFxpcszmczee+/9/PPP\nL2/DrKys7OzsKvZ+4oknLm/VK6+8ct5559VonuXNnz+/pKSk0lVTpkyp5QOyvPcpFyxY8PXX\nX9fmrbV33nmnQnslSZJOp2fMmPH666/vvvvuKz1ycXHxBx98UOmqRx555LDDDlvehqlUKkmS\n3NzcrKzl/pn79NNPp9PpZZ+Bzz///MCBAxs3brxSU/5xbkuWLFl2eTqdvvfee2vTSel0ennv\n3T7++ONbb731So+cJMk999xT6fIpU6bMnj27devWla5dpbKzs1OpVC2f+b9ADz/8cBXPkD/9\n6U+regI1PkkildV4u72P2m7vo84ZP+qE/sc/++n4v10y/tZLT994mz4nnDrorP6VvBFdsvi/\nSZK0y1vxu1VZeesOPWePYy+67Ll97tuzbaMV3n6FCme/PHjwy+WX3P3YEwXZqSRJnr338ybt\n+m/YIDtJGh7dqcU1b99RmLmlQbnT1zoduePMPw5flN66YVZq/jf3/ze97jXrN7mr2ruuzubL\nTq9Byz4P3TWwRoPM+vj2wYN//rJRm+26rf/zz6yqd1E464V9931hqWn//tzTd23z478PHXZj\n57Evj3vj3ZceGnXPbdkNmnf59Q59jzqq29o/nyhw5513lh2wKygoePHFF1f4yNTUt99+uyrC\nbjWYOnXq1KlT63zYTp06NW9e8XSFlZaVlVV2AlwFqVSqNjt66aWXqlhbh3ehgkwmU/XgOTk5\n+fn5y1u76h6Qhx56qIq1tXxAFi1atLxV48aN69Gjx0qP/M033yxvVem5ays98scff7y89J87\nd+4KR676AOLkyZMrXV5cXFx67lo1J7msiRMnLm/Vl19+WZsH5Lvvvit/4LhMJpOp5chJknz/\n/ffLW/XBBx8ccMABtRm8Nlbdj4L68umnny5v1eeff14n93d5fyKWqnHYff3+v0aNGjXqkVGv\nffJdKpXdadu9Dup30Foz/j18xL2DDn/6uU9fe+ni7SpskpW3TpIkU5ekt1p6eaZk7tdTZzdf\nr33z7J9zaq2eA4/p+u87z7v5tyPOquncltWo9cEPjui/7PIl895+4odFmxzzqylTpiRJ0qzX\n+iUfvnvnf+ae1OHnR7xJ28M2yHr8rklzT9qo+Wf3jGvVfWB+9a6cqP7my5tejQZZZ9vL7jh3\ni9J/L54345UHL7vi9D9cdd8dnRrmrHAXS188UTjl/Zduf+Sqh353T7/2TUsXbtBtx6O77Zgk\nyaKZU997+42nH/7HsJPfu27kTRvkZy9vzDq30UYb7bZbxes/am/s2LEV3iqvc+3bt+/UqVOd\nD1v7E5vKW95v1qpXVUfVP3pWneVlWTWtugekipqsvSrmlp1dq1drFe+KVbGqOmo5saqllv/j\nupb7rWLzKnZaHavuoa5avPfM6lcV1xXV4SVHVU2gmrf78u0XHxk1atQjj7z1xYxUKqvj1nsM\n/ctB/Q7q2/XHAhhw2kXXXNhzwyv/cnRyccW/ZvKb/7Yg57axY7/b7/cblF8+a+LNpw55/aL7\nH+nRZKlnVZ9zhzx1xOCLHv78qJW+Wyvy39EjM5nMpyOGnVpu4Rsj3jvp8nJHuFI5R2/T+vq/\nf3jSJVuPeOeH3/y1hr+ha7n5Sg2S37TVHsecf+vTA+7/dPZF3dda4fDLXDyx1cQXD/rXE1P7\nnbrpkrmvXnPTmCPPGlz6ATQNW6633e4HbLVDpwMPGTJy8rxzf7p45YwzzjjppJPKRpg1q5JP\nV6mlLbfccsst6+bQfHnvv/9+FX/C1omePXueeuqpK75dza2Kx7nOd7THHntUcZx31d2F3Nzc\nKgZv0qRJcXHxSp8cVssH5IYbblgVIydJ0qxZs+Wd4LXbbrvVZvD1119/eas23HDD2ozcunXr\nsiuaK2jVqlUVI6dSqRYtWsyZM6eKiO/YseOHH3647Ia5ublVD75C3bt3/9e//lXpqs6dO9dm\n5Ozs7JYtW86aNavCY5KVlbXpppvW8hmy3nrrVThRskzXrl1X24+U8vLz8/Pz81fPaWerU7du\n3VbRM6RMJpOp4qKo6obdxr/ePZXK2vjXu597zUEHHdS3+/rNKtwgld2k12Ytr5lcyfHTVFbD\nM3Zbb9jIqyf2unbTpj9djpQpefTmDxsU7FKh6pIkyWm4ycUnb3vSjRf8e6tVdanO/U9+3XSD\nASNv/PnN59cvPu6qd4fPKt6pIOfnP7k69t915ikjpk357Jukbf92TWu6l1puvnKDpItmpDOZ\nvLyV/JN0k4a5H01bmCRJdl6bt954I/+dGWdu+/PJkSWFs5MkWbfct6z8cyudTtf+1PVIMplM\nfb1rVX3PPvts6YeGLLuqTZs2tZn/qaeeOnr06Ep/9ebk5NTykanigOmTTz5ZxeCZTKbq70sV\nD8jQoUNrM+3s7OyGDRtWesy0a9eutXxATj755Msvv3zZ5a1bt27ZsmVtBu/UqVO3bt3ef//9\n8gtTqVT79u232WabWk77t7/97SuvvLLs8gEDBlQxcukbY+l0uorb7Lvvvs8888ySJUvKniel\nEdm3b99aPv323HPPO+64Y8GCBRWW5+bmHnHEEbV8QPr373/jjTeW792srKxUKnXQQQfVcuSB\nAwcOGjRo2Sd2ly5dGjduXC8/qUpPgvzl/5CsqT322GP48OHLPkPy8vIOO+yw1XB/q/vu7pA/\nDx//1czP3nj2sjOPWbbqSu384KcLZ79T6aquJ1z6m7VnDR145r2Pv/Tehx+99dpLN1xw4lPf\nFB963jGV3r7trmfv1z770TemV3N6NVL4w1Nvzlvy6xN3WWqGx/VKl8y5/eMZ5Rc2Wqdvx9y5\nF1/zYuuex+bV/C32FW5eemVDBdOWlNRokCXzJpdt+/5b424ednF2frtjNm5W/V2Ul5+dWjJz\nZpIk2Q02GrJPp/+76o83jXzizXc++PjjD1996YlLTr+u6Ya9j2yz8ucd8wtU6YnkOTk5tf8o\nu9GjRy97cCqVSlXxTl71R670iFj//lWd21BNXbt2XXZh8+bNa/9Rdo899tiyh73WWWedq6++\nupYj77TTTv369avwaLdq1WrEiBG1HDlJkvPOO6/Cfe/evftll11W++NKgwcP3mabbcpPOysr\n6/DDD+/Vq1ctR15nnXUuv/zyNm3alC3Jzs4+5JBDDj/88FqOnCTJjTfeuNZaSx0Sadq06TXX\nXFP7Dyrr06fP8ccfX/6ofUFBwYUXXlj769K6dOly6qmnVviWde7c+corr6zlyFSQlZW17DOk\nWbNmdfIMqY7qviwvP6tWH3SZyik48/qbnr7vnhefueeJH+ZmNWj2q049zrz66J06Lu8swtTh\nl/zppQGXVn7lW+18ft/o7AbrD9xsqU/Ca9z2kO5NHvlwxOvJDfuUm0X2gN+sPeTFqQeds3IH\nUlew+bJXNiRJstut95/WttxblSsapPzFE6mcvHYbb33edae2+ekdu2rtopz2mzZbMOaet+ft\ntFXTvK2Pu+rC9R947Pnnrn1i+qLiVMHa7br/9vDTD98np1ankfCLM2rUqCRJyj6qNJVK1eFn\nCD/77LP7779/YWFh6S/vRo0ale6u9p555pnTTjvtiy++SKfTWVlZWVlZte/FUqUfa7LXXnuV\nvr1Rtw/IU0899dRTT91///0LFy4sKCgYMmRIXZ2Iecwxxxx88MF///vfP/vss1atWu2+++7b\nb799nYzctGnT0s8l+fTTT0tKSjp06LDpppuueLPqueiiiyZPnvz8889/++23HTp02GeffZo1\n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"
+     },
+     "metadata": {
+      "image/png": {
+       "height": 420,
+       "width": 420
+      }
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# use a box plot to see if we have outliers in the CNT_FAM_MEMBERS column\n",
+    "# of the curr_data dataset\n",
+    "ggplot(curr_data, aes(x=CNT_FAM_MEMBERS, y = \"CNT_FAM_MEMBERS\")) +\n",
+    "    geom_boxplot()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "5cac3aad",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:52.976031Z",
+     "iopub.status.busy": "2022-09-14T02:39:52.974287Z",
+     "iopub.status.idle": "2022-09-14T02:39:53.010521Z",
+     "shell.execute_reply": "2022-09-14T02:39:53.008624Z"
+    },
+    "papermill": {
+     "duration": 0.050238,
+     "end_time": "2022-09-14T02:39:53.013523",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:52.963285",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       " CNT_FAM_MEMBERS \n",
+       " Min.   : 1.000  \n",
+       " 1st Qu.: 2.000  \n",
+       " Median : 2.000  \n",
+       " Mean   : 2.153  \n",
+       " 3rd Qu.: 3.000  \n",
+       " Max.   :20.000  \n",
+       " NA's   :2       "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "summary(curr_data['CNT_FAM_MEMBERS'])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f6955e4d",
+   "metadata": {
+    "papermill": {
+     "duration": 0.007957,
+     "end_time": "2022-09-14T02:39:53.029663",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:53.021706",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "35096540",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:53.048210Z",
+     "iopub.status.busy": "2022-09-14T02:39:53.046649Z",
+     "iopub.status.idle": "2022-09-14T02:39:53.774569Z",
+     "shell.execute_reply": "2022-09-14T02:39:53.772656Z"
+    },
+    "papermill": {
+     "duration": 0.739877,
+     "end_time": "2022-09-14T02:39:53.777001",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:53.037124",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\nPuWjf9w94i9fJx1vPbVz2WBBswMu/81Blbac++28koLm3S+/+Cdl686aMvHZv/71gnET77xz\nYPPyJdZg/sDqOeyww7LZbF3PYmORSqWy2Ww6nc5kMhUHkySpdBTKl+zcuXPPnj1vvPHG0tLS\nsiVTqdRBBx207bbbTp06tVWrVj/60Y/eeeedsWPHzpw5s7S0ND8/f9q0aWVby8nJ6devX/fu\n3evXr19pJhMnTrzhhhumT59evrvc3Nznnnvu3//+9/vvvz937tx27drtvffezZo1q5UHXlpa\nesstt7z22mslJSVJkjRo0GDw4MEzZ86cPHlygwYNSkpKSkpKCgoKunbteuCBByZJ8uGHH378\n8ceLFy/eaqut9tlnn/r163/xxRdlj7GwsLCgoKBFixbbb7/9LrvsUnVfV1555TvvvJPNZlOp\nVOfOnW+99dbVm/N777336aefTp48OZvNtmnTpkOHDvvss09eXl75AkVFRZdccsmUKVOSJGnb\ntu2NN95YULD6/++v3LvvvvvCCy/MmjVriy22OOaYY7bbbru1tKOqJk+ePGbMmNmzZ2+xxRZ7\n7733JptsspKFZ86c+e67706dOrV169a77757u3btKi1QWFg4YsSIDz/8sLS0dOrUqYsWLUqS\nJCcn58QTT/z5z3++Fh/GitQ07FrNH3PdRa9ef3G/Hx3Su2/fk44/9sAWeatcJG8N/bB+q6PP\n3mrUdf+8L3PGDRXX33T/nWaNumd59k/1/ltyS6YNn5JpuV/T+Z8nSZIkTTt2aZokSZJkS+cl\nSdK4w3Y7dvr+78zPHhz46tfNbrzvdx0bfvtVu8/+B9U/48SHr//bYX/6WdlIOrfFjjvuWL5K\n1513XT5q7PDXX0r+G3bpvFYVF6gknbfpd/fuvGu3/XY+85RBVz/6+e/7bFtxsdWbP7CqSkpK\njjzyyLqexcalrLcqVl1SJekqLfnpp59++umnFQez2ezLL7/88ssvlw3ec8891e2utLT0zjvv\nHDp06OWXX/7DH/6wfLx///6ffPJJpd0VFxcfdthhFeczdOjQs88++6CDKv+6vqref//9QYMG\nlZaWlo8sXbp0wIABK1x4l112yc3NHTNmTPnI/fff37Fjx9GjR1f9RO26666XXHJJkyZNykcq\n/qKSzWYnTpx46KGHPvXUU1XTdiXmz59/7bXXfvzxx5XGH3zwwcsuu6xTp05JkgwbNuzhhx8u\n39ekSZN69ux58sknH3/88TXfUU1kMpnzzz9/0qRJZTe/+OKLUaNG7bXXXpdffnnt7miFu77r\nrruee+658od57733/vKXvzziiCNWuPyTTz553333FRcXl90cOnTosccee+qpp6b+mytvv/32\nwIEDly1bVmnFkpKS+++/f9iwYc8999zaeSgrVtM4Gzd53oRRz1zW76ez337s3OO7b9Zsy6NP\nH/DkG+Mz37/qt0qXTbl/8sJtT+ze6aTdi5d++uj0pRXvbdK+72bJ9IemLC4fmfTwqBZdT6+/\nJs9nZYt//7fJHU66uLzqkiRJUrm9+/c79sAGK1mvdYPcVLrh6u2zXpMdfv3j1lNeGL56qwNr\nSNVtJJYvX37llVfOmDGj7OaDDz5YqerKZbPZivFUWFh48803T5gwYU32XlpaOnDgwIpVt3Lv\nv/9+xapLkmTevHnvvvvuCvN33LhxN910U/nNHj16rHCxY445ZlWmnFx33XUr/BTNnDlz0KBB\nixcvnj17dsWqK/fAAw/Mm7eCU5LWxDXXXFNedeXeeuute++9t3Z3VNWjjz767LPPVnyYRUVF\nf/zjH8eNG1d14TfffPPuu+8ue0a2TCaTefzxx5955pmymzNmzBgwYEDVqitXXFzcr1+/2pv+\n96v5OXbp7br1uKZbj6v/tOSdF0YMGzbs0YdufnrojU3a79an70l9Tzppz44tVr7+N2//pTib\ne9qerRvVO6l1vZH/fGDi8ZdUeOE1nX/6ri3vuH/CaYP3SJIkyRbfO3bWnr/bLjN4tR5WkiRJ\nsmzB6zOWlx6+V+tK4007HXBMpxWvki0umjLhzT9PWbTnuYeXD2aKZ5X/ZvntZHObd+64WXX7\nbXdYm+JR7y0szTbJSVW3zAp9/vnnc+bM+XYX6XTHjh1XafUVKvuVIp1OV3ymPUmS119//fXX\nX1/z7a/c3Llz1/Yu1n9FRUXXX3997W6z7AWmJEnKf4mMLS8vr6SkpCYvrVZ60ojYiouLR44c\nWfa/5pNPPlnDtcpeC37uued23nnn1d718OHD1/CLbeVfz6NHj54xY0bZS37Lly+vbrFKP9hX\n4vPPP//oo4+qm8nChQvfeOONl19+ubpZXX311X/4wx9quK+yH1Arf4DvvPPOCseff/75M844\no4Y7Wg2ZTObpp58uOyWg4ngqlXrqqaf22GOPSss/88wzlc4xKFv4iSee6NWrVyqVGjFixPf2\n/VdffVXzI7XmVvnNE6l0wx8fefKPjzz5krEj+vX55cjPxt559di7rrlg2z2O6Hfuxf377Fvd\niiMf+nejtn22LshJkvqndG5203t/KcreUZD6Ln06991n7q/vKczsXj+dWjztka8zm920ZaP7\nV+9hJUmSJKXLvk6SpG2973nSr2jeyz16vFxxpHPPyy44oM13C8z/x4AB/6i4QEGLIx67v9qv\nvLxmjbPZ7OziTJOcnFWa8H333ffiiy+Wfdy8efNXXnlllVZfifz8/Pz8/IojM2bMWAdhR5Ik\nxcXFPtWwNqRSqS+//LJp06ZJkqzkKZOqMpnM559/Xrbi6vnggw9We90amj59+krOAkr+++J1\nr169ari1ldybSqW++uqrqVOnVrfAV199tUqfrgYNVvay2PTp06vL4qVLl67Jcfle33zzzYIF\nC6qOZzKZL774ouquP//886pTzWazs2bNSqfTubm51T1PXGn52n1QK0/JVQ67rz58bcSIESOe\nGPHWpzNTqZzOex7eq3evlnPeuWfoQxef+LcXP3vr71f9uOpayxe998zswk6nblV2PmaTA7cs\n/fj9+75YeFaH7x5qo81PaJ9++v7JC8/apumkB9/c5Adn5KdW7RmvStL1Nk2SZOryzA//dzxb\nuvCrqfObbtGuaU4qqfzmiaIpH/797idueOzgB3u3a1w22KDVz/46tE/N91uyYHEqlWq56ucg\nrkvbbLPNmp9i8r1mz569Dn78refy8vL222+/up7FxqKwsPBf//pXXc+CdaTsubfyj2u+YiqV\nylnFX7wrKd/v2lOTGa68nyr63gmvfIHUmv13XEm9evWqu2ttv+dpJZ/VFT7GlXxayjZVk6+E\n2v3sfa+aht3n773yxIgRI554Ysx/5qRS6Y67HzLw5l69ex2307f184vzrrxp8K5bD7n5lOSq\niVVX//qFYdls9rOhV5xbYfDdoR+cdV2F//BSuafs0eq2ez8+6+rdh46bvffvO6/2oyqT3/Qn\nzXP/PGrUzJ/2bF9xfN7EP5176dtXPvLELo3ykhW8eeKHE1/p9dozU3uf26XyFmvm65em5zXa\nbVVfh02S5MILLzzrrLO+m2dtnNPQpEmTnJycoqKiwsLCiuO77bbbbrvttubbX7kxY8YIu4KC\ngurOp15teXl5jRo1SpJk/vz5G8N7P5s1a7Z48eKKp7lUJ5PJHHLIIetgSqwntt1227IflQ0a\nNFi6dOn3Ll+m7I2la/Izdu+9937//fdXe/XvlUql2rZtu/IZplKpvfbaq4aPouobOSvKZrNb\nb711hw4dqvuJ3alTp5p/upo2bbp06dKVnChS9lzXCr+jmzZtWuvn81WUSqVatmw5d+7cSs/D\npdPpLl26VN11ly5dxo0bV3XhLbbYYtmyZXl5ebvtttvo0aO/d7+1+6Cy2WyLFtWe/1bTsNv2\nR91TqfS2P+p+2U29evU67gdbNqm0QCqn0YHbtbjpyxX/9vDIs181bv+LYX/47kzPt686/Yb3\n75lXsm/Fy4J07HPA3HOGTp8yaVqyeZ+2jWs4t+qk0vUvPGiLK4bdOPHAW7o0/u/vB9nSJ//0\ncUHz/cuqboU61c/7ZHpNf0BUUrx44m3/mtn2p/1XY92KxymTydTKCWrlbzer+Um+tcgJT2Vq\n/ZNf/ktnaWnpxhB2SZJkMpk6+RpmfdaoUaPDDz+87AujX79+K7kCSMVzqtLpdDqdPvroo9fk\nK+rII4+8++67V3L22/cqm1LVk73KHHTQQS1atCibYZMmTRYuXFh1mdzc3Jo/hM0222zfffd9\n4403qt6VTqdbt2693377devWrWfPniucaqX3/36v7/2G7d69+wsvvFB1vE+fPmv7O/2EE064\n/fbbK31JpFKp3r17V931z372s7Fjx1ZaOJPJlM/zuOOOu++++4qKilayx912221d/viq6ZPJ\nl/7unrH/N3fSuyOvvejUqlVXZr+/frZ0/greVFI0+7nRi5b/6Mz9Kw7udPqBmdIFd4+fU3Gw\nwabHdcxbeNVNr7Ta9bR6tfHM5U79rtm79byBZ1z00NN//+DjT8a89ffbLz/zuWklxw86dSVr\n5eeklleIqrI3T1QyfXnpf+/9pmxkwviP3hj52KVnDVrUbLfBx3eohdkDq27kyJF1PQVqwfe+\netW8efMhQ4aUX5Hu0EMPPfTQQ6tbuOzNRmVatmx59dVXt2/fvrqFa+iuu+6q4QXeUqnUkUce\nefTRR1d8UNtss83RRx9d9UXJVCp1+OGH/+pXvyofeeyxx6qeel/2/o9VmvCFF17YvXv3qp/Y\n7bff/vrrr8/LyysoKBg0aFCl1xZTqdTgwYNr/VJ255133r77/s9J+alUqlevXj169KjdHVV1\n+OGH9+vXr+J5582bN7/88svLLvhSSdeuXQcOHFjx0jMFBQXnnnvuT37yk7KbTZs2vfPOO5s3\nb17d7jbZZJNrrrmm1mZfAzV9xu66/qet9j7+/fALOQVbnrHd/1y2reHmP/9Boyc+Hvp2cvtR\n342mcn6xd+tLX5na65I1fR322+3lNr/otj/+7eEHX3n+wWdmL0wXNNmq8y4X3XjKvh1Xdhpj\nuy5Nlrz+4HuL9v1h43rJit48kSTJQXc9ct7mjZIkKZr30oABLyXf/uWJVl1/3OuCU4+rdHVi\nYJ1JpVIvvvjiSSedNGvWrLqey+qo7imc6lR8y16lawLXZFNlq1dcMpVKld0sGym/pHDZ00tJ\nhdcBKj2N0ahRo7LrspZfRjidTpe93FZpGg0bNuzevfsBBxzw0ksvjRw5suzJjFQq9eijj06Y\nMGH69OmtW7fu2rXrxIkT33rrrbILFDdo0OCjjz4qLCxMpVLNmze/+OKLd9ppp0oJcv75559y\nyim33XbbO++8U/45Ofjggy+66KI5c+aMHz9+zpw5W2655U477VQrb1HcfPPNn3766WeffXb4\n8OFlz6i1a9fu1ltvnThx4pQpUxo0aJCXl7dgwYL69et37dq17ISfn/70p+PHj1+yZMlWW221\n4447ptPp3r17f/LJJ7NmzcpkMul0ukmTJtttt90WW2xRaV/PPffcq6++etttt5WUlKTT6eOP\nP75Pn1U487tMQUHBhRde2KtXr4kTJ06bNi2TybRq1apDhw4VLwvcrVu3F1544fbbbx87dmyS\nJLvvvvs555yzRp+m6l122WUnn3zyiy++OHXq1K222urII49cycuLteuYY4454IADPv7449mz\nZ7dt27Zr164rKddu3brttttuH374YflXZsXOS5KkU6dOw4YNe/PNN8eMGVNaWjp79uxPP/00\nk8k0atToqquu6ty5dnqm5lbtJwjrTG29FNusWbPc3NzCwsIlS5as+dZW1XvvvTdo0KAkSV5+\n+eV18x3bo0ePadOmlX28+eabP/vss+tgp9UZPnz4zTff3Lhx48cff7x2t1yvXr2ynyxz5szZ\nGL6FN9lkk4ULF24M13Zp2rRpXl5eUVHR4sWLv3/pDVxBQUF+fv4K36IYTF5eXtmbIque2hVS\nixYtFi9evCavU28oyr5hly1bVvYrzbrUsmXL6u5ar9+5CQBAza3y5U7WN0umP3D1bZ+u8K6C\nZgdccUn3dTwfAIC6ssGHXcM2Jw8ZUteTAABYD3gpFgAgCGEHABCEsAMACELYAQAEIewAAIIQ\ndgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDC\nDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELY\nAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7\nAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEH\nABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewA\nAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0A\nQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMA\nCELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAA\nQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAg\nCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAE\nIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAg\nhB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCE\nsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQ\ndgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDC\nDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELY\nAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7\nAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghLf+4DIAABVJSURB\nVB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCE\nsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQ\ndgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDC\nDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBC5dT0BNgonn3xyOr0ufouY\nOXNmxY9/+tOfroOdVmfx4sV1uHcANkLCjrWoQYMGZR9Mnz593e+9tLR06tSp636/lZR/EgBg\nbRN2rEXbb7/9RRdd9NVXX62b3eXm5ubk5Cxbtmzd7K4m0un0XnvtVdezAGBjIexYuw4++OB1\ntq/69evXq1dvwYIF62yPALBe8eYJAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQ\ndgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDC\nDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELY\nAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7\nAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEH\nABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewA\nAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0A\nQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMA\nCELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAA\nQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAg\nCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAE\nIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAg\nhB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCE\nsAMACELYAQAEkVvXE2Dt+uijj4qKilq0aNGyZcu6nstal8lkSkpK6noW68K8efM++eSTJEk6\ndOiQk5NT19NZ64qLi7PZbF3PYl345JNPCgsLmzdv3qpVq7qey1q38XzDLly4cPz48cnG9A2b\nyWTqehbrwoQJE5YsWdK0adNNN920rufyndRG8uNyo3XCCSdMmjSpT58+F1xwQV3PhVrz5ptv\nnn/++UmSvPrqq02bNq3r6VBrTj311I8++ujYY4+99NJL63ou1Jr33nvvzDPPTJLk+eefX68K\ngDV09tlnjx49+ogjjrjyyivrei7f8VIsAEAQwg4AIAhhBwAQhHPsgnv33XcXLVq05ZZbdurU\nqa7nQq2ZPXv2Bx98kCTJfvvtl5eXV9fTodaMGTNmwYIFbdu27dKlS13PhVozd+7ccePGJUnS\nrVu3goKCup4OtWbcuHFz585t06bNDjvsUNdz+Y6wAwAIwkuxAABBCDsAgG8VzZ+3NLMBv5jp\nAsUbkMxrf73juTfGfbUop8uOu//iV6ds02C1D191m6rFXbBq7j/r5IKr7vp5q/prsI1qD9//\n/WvEsBfemvDZ1KZtOx992vndu7aolTmzEtmSeU/95c8j3/pwTlG6TbuOPU4685BdNlvdjTmy\n64vlCyfdc/vQtz7+vCin4ZZbb39sv3P2bt9odTfmsK6Piua8fdrpQ/a985EzNmu4utuo4yPr\nGbsNxhdPDLrl0bf3POaXg8/v2+jzVwde8OfVvrB3dZuqxV2wKrL/HnXPU9Pml6zZCa/VHb7Z\nY+89/8ZHNvnR4YOuvfyQ7YruuOLCj5cW18q8WYmXr+s/7PWZPU4574arBxzQYdkdV5zz9FeL\nV29Tjux6I3vHhZe/NXuzcwZde/3AX3fJmXhT/wGzi1fzx6TDuh7KZgrvuOS2RaUb+I/iLBuE\nzLJzevW84NH/lN0qmjfqqKOOevDrxbW5qVrcBTU2861bfnH8sUcdddRRRx310Mwlq7+h6g/f\nlScce/ZdH/13udJbBg+6+4PZazhtVq6kaErPHj1u+WTufwcyf+jb6+RL3l6dbTmy642i+a8e\nddRR/5hfVHazeMn4o4466o9TF63OthzW9dLYoReceNGdRx111F3TV/f/vvXgyHrGbsOwbMEb\nU4pKDz54i7Kb+c267dKo3tjXZiRJki2ZO+KuIeedccqxvfv86tIbXp04r+KK2eyyyZO/qsmm\nVrIL1p5mO/QaeNWQm24YUGm8tg7r8kVvv7do+aG9Ov53wfT5V1z9y503WUsPhzKlRZPbb731\n4ds0+e9Aapem+cXzFyeO7IYsndvy1FNP3aNxvW9vp3KTJGmQk04c1hAW/OfJ614s+u3gYysO\nbohHVthtGJYv+ShJku0bfHfFsu0a5M7/aEGSJA9dev6Tn6SO+eWFN15z6aFdktsvOePlaUvL\nFyst+r/zLxxUk02tZBesPfWabLHtttt26NC+0nitHdaFY5Ik2XT88wPOOeW4Y39+zoUDR34g\n1te6ek33ufXWWzvV//bPvRcvnnjvtMXtj+ycOLIbsryGO/Xs2bNBOjXvg3dfHfn0Lb+9utUO\nR53UukHisG74MsunX/vbYYcOuKrj/55ZviEeWafGbxgyy5YkSbJJ7nch3jIvp2RxUdGcZ56Y\ntODaRy7csWFekiQdOu1Y+m6fv945vvvVP1rVTVU3vhYeDd+jFg9r6bKFSZL8/o5RPzvjrFM3\nzf/0jcfvGnzWsj8+1LPdap/xzar58r0Xbr/t3uJtDht4aFtHNoaZb/7jxf9M/fLLwh8fs1Xi\nGzaEkTf+dv6u55y+W8ts6XfPyW2gR1bYbRjS9eonSTKvJNMo59vnAOYUl+Y0q7f463HZbPay\n4//nqeOGJVOT7K5Fy4qTJCkpWpYkSVHRt32WX1BQ3aaqG18Hj45KavOw5uYkSbL/4MFHd2me\nJEnn7Xae/lbvp+/4pOf1e67DB7SRWj7vs3v/cPvI9+fud9xZ155wQEEqNduRDaHLuZf+LkmW\nTht9xrnXXdlm+1+3clg3bN+886f7Pt3srvt/Uml8A/1RLOw2DHkNuybJG58VlrTL//Zr5d+F\nJU27NcttWC+V0/DR4fdVXDiVzls6a/jPT3+sfKR3795lH9z62FObV7Op6nax1h8bVdTiYc1t\n0DFJ3t6vfePytfZo0+CN2dPW/oPY2C368tWL+v8xp+thN/6lb+eW3/4VKUd2g7bwP6NGfZ5/\nxCG7l91ssPnuR7UoeP6lGblnOKwbtlmjPlq+aPqpx/YsH3m+3/GvNNz5nqsLNsQjK+w2DAXN\n9t+83l0vvfnNQUe2S5KkeMkHoxctP+agzRo0PSTJjH5xbmnPzcuuuJO997eXzO923oWHnPjs\nsycmSVJSOPG4Ptc//eQD320rf8WbKmi25QrH6+DRbvQabFp7h7X5Ic1zH35l0oIuZWfpZktf\nm7q08Q4d6uBRbUyymaXXDrgj/8Dzbj9z/1SFcUd2g1Zc+Prdd43f44BhLfPSSZIk2dLxS0sa\n7NzAYd3Qdeh72e+P/vbKI9nMwov6X7H3wGt7td6kQctpG+KRFXYbiFS9/sd1ufj+K/7e5jc7\nNC9+9k83N2hzYN+2jdLJD0//wSYPDLimoN9xXbZo9MEr9z736ZzBA1qvxqaSJKlunHWsXuNa\nO6ypJBnQs+PAay9ve+4pXTet9/6LD76xOO83Z/oD82vX0m+GTVhafErXBmPfe698MLf+tj/Y\nwZHdgDXvckaHemdccv3Qs47Zt2lO0diXH/igMP83J25Tr3G+w7pBK9i0/babfvtx2Tl2zdpv\ns81mDZNk8w3xyKaya3ZNVNadbOkrD9766Cuj5xSlOuy835kX/nLbhrlJkmRLFzxx9x9Hvvnh\nvOK8ttvs1Ou0s/bpWH6RhRX9PlH9pqodZy0rXf710ced3fuev57YukHZSK0e1pKXH7r9ib+P\nnr2sXvsO2x158tkHdG667h7bRmnGmwP73fhxpcEm7S57+E97OrIbtKVT37vjz4+MmzilJK/x\nllt1OaLvGft3bpb4hg0kWzrvp0effMTdw8v+8sSGeGSFHQBAEK5jBwAQhLADAAhC2AEABCHs\nAACCEHYAAEEIOwCAIIQdAEAQwg7YSGVLF2xdPy+VSrU7eETVe/959DapVCo3v83s4kzVe+dN\nvDiVSqVSqWM/nZMkyd8Pa59aqSfnFNZwVpmSOcNvurj7ntu3atYoN79hmw479T7nirGziiou\ns/DLQVV3Ua9+o627/viCIX8trDDfuZ/1Wcms/jR9Sdlicz49ttJdDZu12rHbkVff+2rp/05v\n2YJ/plKpzX88snYfNVBb/F0BYCP1zdiLJheVJEkyfdT5c0uObZGbqrpM6fIZF4+ddd+em1Ya\nHz3oyYo32x93Rv8d55V9nCn+5ve3Pdig9dFn9/3uD0F2rJ9XkykVLxrX+4cHPD1pQdud9//p\n8QflFc36bMJ7j99x5dP3PzJ8wrhj2//Pn/jbdK++J+1V/teNsoULZr7+1IhbLz3+5Yk54+/v\nVXHJtoee9vMdm1fd3S4N/2dW7Y48/WddmiVJkmRL533z5aiRL1x+2vMPPX/tR49fVrCiJwFq\n61EDtSkLsFF6YO82qVTq2n6dkyT5xdszKt37j55bJ0nyg0b12nR7uPKamWU7NazXbMfmSZIc\nM2F2pTuXLx6XJEnrHzy3yhPKLP/1Li1TOfUHPPxOxeF/v3BNfjrVZOvTykcWTB6YJMmuV7xf\nZdcf79gwL5XOm7CkuGxkzsQTkiTZ5/5JK9/z7AnHJEmy31//U3GwdPnM647tmCTJgTd/UD5Y\nNP8fSZK02fOFKrte3UcN1CovxQIbo9LlX18wemajLc779RUXJEny0kUvrXCxS/p2+Gb0RbP+\n99XYBV9c+9GS5b2u/kHtTmnaa2fd9v7sPS7/x5A+e1Qc3/awgX89dMuF/zf01qmLV76FvIY7\nDvlh62ym+Lm5tfAaaDqv9YDhb+3VJP+Ny/ssLvXHJ2HDIOyAjdG0f/56bnFm59+e2bDNGQc2\nK/hmzIXTlq/gXLod+p9Tunzmxe99U3Fw3ODheQ13uKJjs9qd0ohznkrnNnn4Nz+qetfBd991\nzz33dF7BBCsrKSpNkmTL/No5zSad1/KWUzsWLxk/5KtFtbJBYG0TdsDGaET/11OpnBt+vk2S\nJFf22qq0eM4Fo6ZXXaxRmzMObVHw8sV/rzBWesmzX7btflN+egXn5K2B7PWfL2i42ekdCnKq\n3tdwi0NPO+20w9o1qnpXRSWF/7l2wtyGm/bs1ap+bU1rm1N2TpLkjddn1tYGgbXKmyeAjU7J\n0k8GTpjbZOvL9mpSL0mSrgNPSv4y8J/9n07eP6fyoqnUFSdtu/ed/WcVn9AqL50kycIvfzd6\n0fL+1+2RZP9Si1MqLZo8Y3lpy6Y/rvkq0/5++6VF5e/qyC6dP/21Jx//ovkej/7r4UptOOoX\nnVK/qLx6vUa7Lls09nv3kt98+yRJFk5cWPOJAXVI2AEbnS+fuaAwk/3xVb8ou9lky9/s2ujK\nDz6+5D9FZ25b5QmzHX5zVult5/Qf880De22WJMlH1zyQ16DLVZ2aL/2sNqeUzRYnSZKkVuFV\nlBlv3jfkzcqDu/5s711aV366boXvis3J36Jm+0mV/wOs/4QdsNG5d+CYJEnafT7i5pu/vR7H\nDs3yxy1edP7LX/+tR/tKCzfa/OzuzS965eJXkn+dlCTZQSP+b4sDn6ifTpbW6pRy63dokpte\nNv/tJDmm6r3Z0oUvvDiqXsOdDv5Ju/LBXa94f+zg797AsXTutBf+/Ktelw3ZN/WT/ww/pOLq\nW/98wO9O7rh6E1u+4NMkSZp0brJ6qwPrmLADNi7LFrx+w+SFSZI8MPjSSne9PeCvSY8BVVe5\n8sQO3f7c/5viPg2++cPr85ddcP0qvGBaYzkXb9lk8JS7/114fcf6lX8yL/r690ceeeXWx/zj\niwphV0mDFpsfd+nj+9/Y8J2Xb0uSQ6pbbFV98cAHSZLsu1/lK/kB6ydvngA2Lv954NLSbHbf\nuyf+z6WfMsU/bpI/b9LgD5cUV11lx0vOLF3+Tf/R33xyw19y62979XYruNjvmutzwwGZkoUn\nXPNW1btGDRyWJMlPfrP9920jfVCz/OLCWnuROFsyt/9fJuU13PGSdo1ra5vAWiXsgI3L76//\nKJXOv/X4bf5nNJX7uxO2yWaWXfj0l1VXabT5OQc2K3jl4peuGvbF5vvf3LCW3w/7ra2OefCE\nDk3HDjn4vHteq3jVuAlPXXXs8M/rtzz8Dz9qXe3K/5WTSpUuW8Hbe1dDpmTu7/vu/caCZftd\n9XCjHCfZwYbBS7HARqRw9uP3zljScqff79Ko8l+7+sHl5yV3nTX2t/clfa6tsl7q6hO22fuu\nM0Zmlv1qyN5raW6pdMOho5/95gdH/OGX+z9+2z5H7LNr09xlk8b+8/m3J+XW73DPvx6pSVC2\nr5+bzcx/c+Hybk3qlQ9OfvymSye2qLrwZt3O+fURbctv/t/wmy79oOzifJkFs6a88bdnxs8s\n7HjMtX+7YOc1f3TAuiHsgI3IhFuuTZLkoFt6V72rYZszj2554dOTb3hz4eCKVVSm66X9snec\nn1uw9XXbr6CQaktBi31f/PeEoUOuf+jJF0c8OHpJSW7rttv2PuuK/oMv/mGV97qu0HYntk8u\nm33qWU9OGvbz8sGvnr97yPMrWHjH84+uGHZTnrlryDPffly/cYutdtz/ymsvGHjaQSu4sB6w\nvkpls/5QDABABM6xAwAIwkuxAGvd5KeO3OXUf61kgfym+82Y/PQ6mw8QlZdiAQCC8FIsAEAQ\nwg4AIAhhBwAQhLADAAhC2AEABCHsAACCEHYAAEEIOwCAIIQdAEAQwg4AIIj/B4hBLr5aOh57\nAAAAAElFTkSuQmCC"
+     },
+     "metadata": {
+      "image/png": {
+       "height": 420,
+       "width": 420
+      }
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# use a box plot to see if we have outliers in the AMT_CREDIT column\n",
+    "# of the curr_data dataset\n",
+    "ggplot(curr_data, aes(x=AMT_CREDIT, y = \"AMT_CREDIT\")) +\n",
+    "    geom_boxplot()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "0daeabde",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-09-14T02:39:53.797367Z",
+     "iopub.status.busy": "2022-09-14T02:39:53.795631Z",
+     "iopub.status.idle": "2022-09-14T02:39:54.236151Z",
+     "shell.execute_reply": "2022-09-14T02:39:54.233439Z"
+    },
+    "papermill": {
+     "duration": 0.453403,
+     "end_time": "2022-09-14T02:39:54.238928",
+     "exception": false,
+     "start_time": "2022-09-14T02:39:53.785525",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "Warning message:\n",
+      "“Removed 2 rows containing non-finite values (stat_bin).”\n"
+     ]
+    },
+    {
+     "data": {
+      "image/png": "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\nmnLIxrMf//4ATAwAgJXT24snqvV6cURx2fFcJZcktX6dUmoymUwfNkXS49PMvGrw5zPUNPJB\nsAy6NfJBsAy6NfJBsAy6Dc2DkKnX672532kbr3LKjPc9+uyN6zblugdr7c/vsvaYO4Z/fdY/\nvzVgMxwktVotm41zje/ee+/dh++68sor+30mAEA/qlaruVxueVt7+4rdIdd989Qtjx67yQ5f\n++oB7998w0q2418P/eXys06/bUbn5JuO6KeppmzWrKWvAimVSuVyuVartbW1pTKlQbbsEUiS\npKmpqVgszp07d/DnM0SUy+VSqVStVufMmZP2XFJTKpXy+fy8efPSnkhqKpVKU1NTZ2dng/8s\nZLPZ+fPnpz2R1DQ3NxeLxY6Ojgb/WUiSZMGCBWlPJDUtLS2FQiHFZVCv11dZZZXlbe1t2K0y\n7qgHb8ztfvCkyRPv6B4srbLJt6669ptbrfZm5zg0VKvVpUa6X85cdlNIPT7NWq1Wr9cb5Aj0\nqNGWQY8sA8sgSZJarZbJZBr5CFgGiWXw6jIYsqfElfgFxet/dOI9Tx/ywJ//8LdHnl5Qza85\neuwHtn/38NxQfIMZAKABrUTYJUmSZIrjtt553NYDMxcAAN6EOJcLAAA0OGEHABCEsAMACELY\nAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7\nAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEH\nABCEsAMACCKf9gQay8SJE/vwXVOmTOn3mQAA8XjFDgAgCGEHABCEsAMACELYAQAEIewAAIIQ\ndgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDC\nDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELY\nAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7\nAIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEH\nABCEsAMACELYAQAEIewAAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACELYAQAEIewA\nAIIQdgAAQQg7AIAghB0AQBDCDgAgCGEHABCEsAMACCKf9gR4C5s4cWLfvnHKlCn9OxMAIPGK\nHQBAGMIOACAIYQcAEISwAwAIQtgBAASR8lWxL9416aBv/2PJkQMvvebTq5aSpHb71PNvvOOv\n/56b22Tce/b/8gGjK11T7a9xAIBoUq6c2ffNLq/6iSMPGts9st6wQpIkT153/NlXP/25w484\ncGTnry48b9JR7VdceHi2/8YBAOJJOeymPzSnddNtttlm7OtG6+1nXf3wmL3O3H2nMUmSbHhG\nZvf9zrji2f33XavQP+NrN6fwVAEABljKr17dN2fxyPGt1YVzXpg+u/7q4OK2O55ZVN1557W7\nbja1bju+pTjt9hf6a3wwnyAAwKBJ+RW7v83rqN855bPnPtJRr+ebV/vw3kce/InN2+ffnyTJ\nppVC993eWcnffH9b+wf6ZzzZ55WbDzzwwAsvvNJ5hUJhwoQJS00vl8t1fdHU1NRfT7kPBu3R\ne3ygfD6fzWb7dw7pHs+V1bUMMpnMW2va/WsglsFbi2WQJEkul2vwZZDNZhPLIJdr8CPQtQxS\n/Fmo1+sr2Jpm2FXbn52XK6w/apvvXHFSa33uX2665Ls/Or5pox/vUpyfJMmq+ddeTRxVyHXO\nW1Rb3D/j3TenTp168803d309cuTIW2+9tcd5ZrPZYcOG9ccz7qNBe/QVPFD/ziHd49k3qS+D\nocARyOVyDkKhUHjjO4WWz+ctA8sgxWVQrVZXsDXNsMsV177mmmtevdW03R7HPHbztN9d9MCu\nXyknSTKrs9by6gtmMzqqudZittg/44P1/AAABtXQ+t0f499Wvm3mS4XmzZLkjkcXdq7b9EqQ\nPb6wc8S2rf013v1wkyZNOuaYY7q+rtfrM2bMWGo+5XK5UqnUarVZs2YN3LN+Q8tObDAfqFQq\nFYvFOXPmDPQDDVmVSqVcLler1dmzZ6c9l9SUy+V8Pj937ty0J5Ka5ubmUqnU2dnZ1taW9lxS\nU6lUstnsvHnz0p5IalpaWpqamjo6Ovr3lPjW0tzcnMlkGnkZDBs2rFgstre3p3hKXHXVVZe3\nKc2wm/3YeV8746FTzz93jWLXu6W1Pzy3oHXCO0qtG61VvOCWO6fv9PF1kyTpmH/f3XPbP7PT\nGqXWt/fLePcEyuVyuVzu+rpWq82cOXN5U13x+9kDbdAevccH6hrs3zmkezz77C067X4xEMvg\n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\nt9460FPae++9B/ohAIAUXXnllQO6/2q12vXCU48iv2KXLZaTJJnVWWt59fnP6KjmWovddxg3\nblxnZ2fX15VKZfHixUvtIZfL5fP5er3e3t7eL1O69NJL+2U/g6nrpZqOjo60J5KafD6fy+X6\ncRm8FVkGXcugVqs1+EHIZDINfgQsg67Xq7r/9WxAhUIhm82uYBksmxP9q16vN2jYFZo3S5I7\nHl3YuW7TK8//8YWdI7Zt7b7Dnnvuueeee3Z9XavVZs6cudQeKpVKV9jNnTt3cOY8BJVKpaam\npkY+As3NzeVyuVarNfJBKJfLhUKhkY9AS0tL17/ojXwQKpVKLpdr5CMwbNiwXC5XrVYb+SA0\nNzdnMpl58+alPZHUDB8+vFgsdnZ2prgMSqXS8jZFviq21PrBtYq5W+6c3nWzY/59d89tn7DT\nGunOCgBggEQOuyRTPHq3TZ64bPJt0x59/skHLjnhe5U1d9xvnZa0pwUAMCAivxWbJMmGe5xy\n2OJzpp59woxFmTFbbH/KSQeFLlkAoKEFD7skk9v581/b+fNpTwMAYOB5AQsAIAhhBwAQhLAD\nAAhC2AEABCHsAACCEHYAAEEIOwCAIIQdAEAQwg4AIAhhBwAQhLADAAhC2AEABCHsAACCEHYA\nAEEIOwCAIIQdAEAQwg4AIAhhBwAQhLADAAhC2AEABCHsAACCEHYAAEEIOwCAIIQdAEAQwg4A\nIAhhBwAQhLADAAhC2AEABJFPewJD2rPPPvvSSy8VCoUNNtgg7bmkplardXZ2pj2LND3zzDMz\nZswoFovrr79+2nNJTa1Wq1arac8iTf/6179mzZpVLpfXXXfdtOeSmlqtlvYUUvbEE0+0tbU1\nNzevvfbaac8lNdVqNZPJpD2LND3yyCPz5s0bNmzYmmuumfZceiDsXpHNZkeNGrXU4A033PA/\n//M/a6yxxi9/+ctUZjV0lMvltKeQmquuuuryyy8fPXr0Nddck/ZcUtbIy+Diiy++9tprN9ts\ns0svvTTtuaSsUqmkPYXUTJky5aabbnrve9973nnnpT2XlDU3N6c9hdScfvrpt99++w477HDG\nGWekPZceeCsWACAIYQcAEISwAwAIIlOv19Oew9D1r3/965///GepVNp2223TngupeeKJJ556\n6qnm5uatt9467bmQmkceeeQ///nPiBEjttpqq7TnQmoefPDB559/fpVVVpkwYULacyE1999/\n//Tp01dfffXNN9887bn0QNgBAAThrVgAgCCEHQBAEH6P3QrUbp96/o13/PXfc3ObjHvP/l8+\nYHTF4Wo4L9416aBv/2PJkQMvvebTq5bSmg+D77JDP1866YI9V+v+HX7ODI1oqWXgzNA46p2z\nrv/Rhb/+099nLMquue5Gn9z3kA+PXyNJkiF7KhgSkxianrzu+LOvfvpzhx9x4MjOX1143qSj\n2q+48HCvcDaa2ffNLq/6iSMPGts9st6wQorzYXDVH//jxdc/N3v3JT6L7MzQeHpYBs4MjeM3\npx19xUPD9//SxE3War7/t1edP/nwhT+4/NPrtgzZU4GwW456+1lXPzxmrzN332lMkiQbnpHZ\nfb8zrnh2/33Xbtzftd2Ypj80p3XTbbbZZuwb35VYpt91zrHn3jljXvvrRp0ZGkzPy8CZoWFU\nF//7gmkvb3/amZ8YOzJJko022ez5u/f4+fkPfPq0CUP2VDAU4nIoWtx2xzOLqjvv/MpfA2xq\n3XZ8S3Ha7S+kOysG331zFo8c31pdOOeF6bNdQN5QWsfuPumk08/8zrFLDjozNJoel0HizNAw\nqoueWm+DDf5r9PBXBzLjRzR1zJ43lE8FXrHrWfv8+5Mk2bTy2kvr76zkb76/LdknvTmRhr/N\n66jfOeWz5z7SUa/nm1f78N5HHvyJofiLi+h3xeFrbzg8qba/7lNTzgyNpsdlkDgzNIziiO3O\nOWe77psd8x655Ll56x2wcfv8a5OheioQdj2rLZ6fJMmq+dde0RxVyHXOW5TejEhBtf3ZebnC\n+qO2+c4VJ7XW5/7lpku++6Pjmzb68f6btKY9NdLhzEDizNConr73pinfv6Rj9EcnfWSdzqeH\n7qlA2PUsWywnSTKrs9aSy3WNzOio5lqLqU6KwZYrrn3NNde8eqtpuz2Oeezmab+76IH9z/SX\nSBqUMwOJM0PjaZ/16CXnTvn132Zuv9uhp+69QymTmTuETwU+Y9ezQvNmSZI8urCze+TxhZ0j\nxvm/sUY3/m3ljjkvpT0LUuPMQI+cGQKb+/Rvj/jScX9PtjjjR5d+dZ8dS5lMMrRPBcKuZ6XW\nD65VzN1y5/Sumx3z77t7bvuEndZId1YMstmPnfeFLx7+Qnvt1YHaH55b0LrpO9KcE6lyZiBx\nZmgk9dqCU489v2nHieef8KWNR732UcuhfCrwVuxyZIpH77bJ1y+bfNuax4wd2fGL875XWXPH\n/dZpSXtaDKrho/dYdcEhx06+8Ii9d2jNLJx260/umD/shC86fTcwZwacGRrJgulXPLSg44DN\nKtPuvbd7MF/ecMuxrUP2VJCp112pvRz16q0/PufqW++esSgzZovtD/nqQRs26+CGs3jWg5de\ncMX//f3xRblhozca9+kDv7T124fEjy6Do9r+n112O+yzF0393OqVV4acGRrPssvAmaFBvHDn\npC+d8Y+lBoev+98/Oe99Q/ZUIOwAAILwGTsAgCCEHQBAEMIOACAIYQcAEISwAwAIQtgBAAQh\n7AAAghB2QN/VOmdcdebXP/S+TVdrbck3Na85ZvPPHj552kuLlrzPHXttlMlkRu962bLfft+3\n3pXJZH42Y2GSJLd9dL3MCnXdbcVmPrrP8r69NGLpP9Ber7ZtUC5kMpl1d/7psrv6/S6jM5lM\nvmnNlztqy26d9cjXu3a768Mz3nBWfdjbCp5IJpM57/n5fdvttG9sudSuiuWWDbfc/sQf/X7J\nb+zlo895+vhltxbLLRtstvVRp09d+PoZ1Wvzrz77Gzu8d+wqw5uLlRFvHzN2j0OPv/2Zeb05\nekDvDYnfkgy8FXXM/etn373Dzx9rW2eLD35qr50Ki1569KF7rz3/Wz+/7MqrHvrrruu97hfx\nP3X9gafc+7Hj373a8va23m4HHz1uVtfXtY7pZ33/x5XVdzlsvzHdd9ioXOjlxNb5yBf2HDdy\nqcF8af2lRqZP+9pTizqTJHn+j1+Z2bnrKvnMsruqtr/w9WkvXfq+ty01fvfxP+vlZN7M3np8\nIkmSjG9+3aFY2d1ue/DE9w0rJkmS1GvzZj570zU/O+lLO9w9495fH/euPjz627bZb99tVn/1\nVn1h24t/uP6n53xjr988knvwst1fGa0tmLjtmB/c9eKa4z+6z0GfWmNE4d+PT/vZxadfd+ll\n5/zl70dssWqP8wT6og7QB7X2I8ePyuTKx/7kz0sOP37TKU3ZzPANvtA98oc9N0ySZFQhVx71\n0ZkdtSXv/LfJE5Ikue7lBUvtu33eX5MkWX3LG1d2UjMe2TtJku0ue6w3d778/WtmMplTv7Rx\nkiT73/XCUlt/9+kNkiTZsqW45rY/Wfo7a4s3by62jhuZJMlnHnq5N4+1snvr5RNZ2d3ee9wW\nSZKc8sycJe+4ePZfN6kU8qX1FlRrK/XobU9NSpJkwuS/LTXePu8f45oLmWzhofkdXSNPXvuJ\nJEm2/uYvl7zb/Gd/t2mlUF71Q69fFMCb4q1YoC+eu/3Q7//t5fee8LvT93nvkuMbfnTS1I+8\nfc6/Lj7n2de9y3bxDz658OVff/jEOwd3mstVbf/PUXe/2LL2xCMnH5UkyS1fu6XHux2335jp\nd3/tpde/0dn25Kn3z2/f/eQtV/ZB+3dv/bXb4ojxp20ysnPR0w8t6OzzHJZUaB53+rtXr9c6\nbpz5yrvnD511b5IkZ3195yXvVlnrgxfvv9HCGb/56ctv/CY70EvCDuiLnx5+fTY//CfHbLXs\npp1/eMFFF1208es/YrXR5646atyq077zX9e9+gmtdD33+yNndtS2+OYhzWsevGNrafo9X32u\nvYePqY09+vBq+4tfv3f6koN/PfGqQvPYyRu1ruyD9u/e+nG3D89anCuusWml3z6c07momiTJ\n25te2WFpZDFJkp/eN3Opu0045ZcPPPDAziOb+utxAWEH9EH92/9sa17ji2NKuWW3Na/9kS98\n4QsfXfd1n7HLZHIn/+bCSrLgSzsf30NADbqfHv2HTCb3nT1HJ0nyrd3Xr3bMOOqPzy97t5Y1\nD/7IKqXffP22Jcaqx/3i6XU+dGZTtofP5K1Y/+6tX3a7qO35q7/3xeOfmrPt168pv4k5LKlz\n4ROnPjSz+W2f3n21ctfIuEm7JUlyzo7j9jjihGtvuWvG4mrXeHHkBmPHjl01718i6Dd+nICV\nVl301Avt1aYRW6/UdzWvuetNx75r5oPn7PW/TwzQxLr8cf93LHWpZjZXWfIOnQsemPTQzOEb\nHLfN8GKSJJtN2jdJkt8f/fMe9pXJTN53w+n3HN39Ruecp79799z2XU97bw93fkMrubdln0gm\nk2ka9q6l77eSuz3+7cO791ZuXWvPoy8evcvpvz1lu749+nO3TfnGa4478tDPv2v9zR8e+d6r\n7/1Jd/W/bZsz/3TxpM3WaL/mvJM/+5FtVm8eOeEDnzzmlHPveWpO7w4c0FuuigVWWr3ekSRJ\nklnp/zPc9ls3f/SH6/zs4I/+/TMPbdHc26tcV9ayl3NmMq97rKdvOGphrb71Sft33Rz+9mMm\ntHzrvn8c98SiQzZc5jXIscccWv3+4UffM/3ybdZIkuT+Uy4vVDY56R0jFzzal7mt1N56vC41\n17T2m9zta1fFJkm9uuCJv//uhp8du+nHZ0274bSW3Gsv2vXy0V+489LTl/nk5IQ93j9+9fKS\nI1sfeMrfDjz5mQf+/Lsuv7/lu3+48cwTvvqhL1948/cP7GGWQN+kffUG8FbUOTyfHbbO0T1u\nq3W2/fKXv/zN75/putl1VezDC165QHL6PSdlMpn1PnlRPb2rYv97gxFJknz+W98+81X7rjMs\nSZKP3fBU9326Ljj916LOer3+oZGlNbf5cdeT2761af1P/LJer7/80GeSlbwqtvd7W6mrYnu/\n2x6viq3X67d9831JknzsiidW6tF7vCp2/oxnrz3tM0mSjNnz5hV9c23RPb+66ANrVJIk+fzN\n/17xAwG9561YoA9yX3/78Pkv/PDxhT1cRzn3P2d9/OMfP/jcnt9vXe3d37z4U+s9/YsvTv7L\n9B7vMNAWt/3hO0/NSZLk8hO/cfSr/vc/c5MkuevYqT1+y7c+N2b6vUdP76jNe3bKH2Yv3uXb\nK/ce9IDurV92+/+OPT9JknvP/sebn0ZllbV2+8a1H2wtPfeb73eNVBc/s8suuxz+/Yded79M\n07v/6ws3/OnbSZL8ZvLf3/zjAl2EHdAX+3xnh1rnnL1P+dOym/446YokST5wzKbL+97P/eQX\nG5ULZ3xs35c7qwM4xeV44vJvVOv1//fDR173P7m1jq2HN8167MS/z+9Y9lvGHXdItX360XdP\nf+A7P8qXNzz5nT382t7e69+99dNuc0mS1Nr759edJEl2p9amjoWvvA2cK67xp5tuvOKc/132\nfsURo5MkKa5S6qfHBYQd0Cfrf+bHe48ZMe30nSdedHt9ifGHrj9p16v+WR71X+dutfryvrfQ\nvNmvf/SZhTN+s9vlA3sVRY/O+vb9mWzTOXuNft1oJv/dvUfXa4u/+vOnl/2WlrUO37G1dOvX\nbznpiifX+uD3mt/c1aP9u7d+2e1dZx+eJMk7DxvXLzNJkiSXyVQXv3qVcab4g4+9ve2p0/c5\n53dLLpWk3n7RYV9JkuSzp2zRX48LuHgC6ItMtvniu38xfcuPnXvQB6/9/nYf227CiPzix6b9\n/ld3PZYvj7no/65ccViM2efKr55+21kP9OoPrfajhS9fe8kL80dtftb4lqUv3djyhInJBYdO\n++alyT6nLvN9mZP3Hv3+Cw7+dW3xl09//5ueRW/39tS1Z37jkVWWHV9j28OP/Ng6fd7tb06f\nPG9498UTC/95/+9/esv95dU++JP9N3oTj/4665Xz9drsO+e0bzu8mCTJZ6787d7vfteVR+34\n24u3++i2W642vLRg5vN3//7Ge/7ZtuUBPzxj/KgV7w1YCSl9tg+IoHPRMxdOPnTbzTcY0dyU\nb2pea8wWexz2rXtefN3FEEtdPNFt3nM/HZbLJoN78cS9/71FkiR7/vY/PW7dZVQ5k8n9sW1x\n/fXXJdTr9bn/PidJknxpg7mdr/wBrD5fPNGbvXU9keUZ95W/9G23XRdPLCmTyba0rrXjHkf9\n5eWFSx3GN3z05f1JsXq9ft9p70qSZKO9r+oeqXW2TT3z2I9svelqrS25XHHEqHW3+dBnz77q\n//w5MehfmXq9voIfYAAA3ip8xg4AIAifsQPeGp66/uPjD/y/FdyhacT2LzzV01+PGGBDdmJA\nA/JWLABAEN6KBQAIQtgBAAQh7AAAghB2AABBCDsAgCCEHQBAEMIOACAIYQcAEISwAwAIQtgB\nAATx/wG/81zd86qxqAAAAABJRU5ErkJggg=="
+     },
+     "metadata": {
+      "image/png": {
+       "height": 420,
+       "width": 420
+      }
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "ggplot(data = curr_data) +\n",
+    "  geom_histogram(mapping = aes(x = CNT_FAM_MEMBERS), binwidth = 0.5)\n"
+   ]
   }
  ],
  "metadata": {
@@ -762,14 +1757,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 64.054521,
-   "end_time": "2022-09-13T05:33:29.352186",
+   "duration": 66.569465,
+   "end_time": "2022-09-14T02:39:54.367986",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2022-09-13T05:32:25.297665",
+   "start_time": "2022-09-14T02:38:47.798521",
    "version": "2.3.4"
   }
  },
